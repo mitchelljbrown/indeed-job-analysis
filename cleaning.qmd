@@ -1,0 +1,173 @@
+---
+title: "Cleaning Indeed Data"
+format: html
+editor: visual
+---
+
+![](clean-image.png)
+
+```{r}
+#| echo: false
+#| warning: false
+#| include: false
+library(ggplot2)
+library(data.table)
+library(tidyr)
+library(dplyr)
+library(readr)
+library(stringi)
+library(stringr)
+library(knitr)
+library(DT)
+data <- data.table(read.csv("data-analyst-2022-05-10.csv"))
+data[,X:=NULL]
+```
+
+## Cleaning
+
+Most of the columns scraped here are in good condition to start using. However, the pay column is currently in string format, and contains additional strings as well as ranges of salaries. The strings will need to be parsed and the numeric values extracted. To deal with salary ranges, the average of the range will be taken so we can represent pay as a single number
+
+### Original Scraped Data
+
+```{r}
+#| echo: false
+
+kable(head(data, 5))
+
+```
+
+### Creating a new location column
+
+Many data analyst positions are remote. Many of the listings still contain the city where the company is based with the word "remote" somewhere in the location such as "Remote in Toronto, ON". If we want to analyze this data based on whether positions are remote or not, it would be nice if the location column was categorical and every position with remote in the title could be grouped into one. Therefor, if a column contains "remote" or "Remote", the string will be changed to "remote" in the location column.
+
+
+```{r}
+#| echo: true
+
+# return remote location if remote is found in title
+data[, location := ifelse(grepl("Remote", title) | grepl("Remote", location)|
+                         grepl("remote", title) | grepl("remote", location),
+                         "remote", location)]
+
+kable(head(data, 5))
+
+```
+
+### Creating A Province Column 
+
+If we want to organize jobs by province, we can parse the last two characters from the location column where the column != "remote" and matches one of the provinces from the list of province abbreviations provided.
+
+```{r}
+#| echo: true
+
+# create a province column that takes the location column and splits the column into a list of strings
+data[, province := ifelse(length(strsplit(location, " ")) > 1, 
+                          strsplit(location, " "),
+                          strsplit(location, " "))]
+
+# take the last two characters from the last word in the list
+data[, province := ifelse(location != "remote", toupper(str_sub(location,-2)),
+                          "remote")]
+
+kable(head(data, 5))
+```
+
+### Cleaning the Pay Column
+
+The pay column presents some hurtles to overcome to extract numeric information. This is my process for doing so
+
+```{r}
+
+# remove commas
+data$pay <- gsub(",", "", data$pay)
+
+# extract only numbers from pay
+data[, pay_extract := regmatches(pay, gregexpr("[[:digit:]]+", pay))]
+
+kable(head(data, 5))
+
+```
+
+
+```{r}
+#| eval: false
+
+# split pay into 2 columns
+# if there are two numbers (salary range), low number will be in the first column, high in second column
+# if there is one number, the number will be in the first column and "NA" in the second
+
+data <- data %>% unnest_wider(pay_extract)
+data <- data.table(data)
+
+# remove unwanted columns generated with "unnest_wider"
+data[, c("...3","...4") := NULL]
+
+# change column names
+colnames(data)[7:8] <- c("low", "high")
+
+# make columns numeric 
+data$high <- as.numeric(data$high)
+data$low <- as.numeric(data$low)
+
+# reformat null values as some are not readable
+data[, rating := ifelse(rating == "NA", NA, rating)]
+
+# make a column for average pay
+data[, average := ifelse(is.na(high), low, (high + low)/2)]
+
+# get rid of original pay column
+data[, pay := NULL]
+
+# only include relevant columns
+data <- data[, c("title", "company", "location", "rating", "province", "average")]
+
+# change "average"average" column as the new "pay" column
+colnames(data)[length(colnames(data))] <- "pay"
+```
+
+```{r}
+#| echo: false
+#| include: false
+
+# split pay into 2 columns
+# if there are two numbers (salary range), low number will be in the first column, high in second column
+# if there is one number, the number will be in the first column and "NA" in the second
+dat <- data.table(data %>% unnest_wider(pay_extract))
+
+data <- data %>% unnest_wider(pay_extract)
+data <- data.table(data)
+
+# remove unwanted columns generated with "unnest_wider"
+data[, c("...3","...4") := NULL]
+
+# change column names
+colnames(data)[7:8] <- c("low", "high")
+
+# make columns numeric 
+data$high <- as.numeric(data$high)
+data$low <- as.numeric(data$low)
+
+# reformat null values as some are not readable
+data[, rating := ifelse(rating == "NA", NA, rating)]
+
+# make a column for average pay
+data[, average := ifelse(is.na(high), low, (high + low)/2)]
+
+# get rid of original pay column
+data[, pay := NULL]
+
+# only include relevant columns
+data <- data[, c("title", "company", "location", "rating", "province", "average")]
+
+# change "average"average" column as the new "pay" column
+colnames(data)[length(colnames(data))] <- "pay"
+
+# if job pays hourly, convert to yearly wage assuming 37 hour work week
+data[, pay := ifelse(pay < 100, pay * 1850, pay)]
+```
+
+### Now this is what our cleaned data looks like
+```{r}
+#| echo: false
+datatable(data)
+```

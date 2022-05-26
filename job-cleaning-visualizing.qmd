@@ -1,0 +1,136 @@
+---
+title: "Analyzing Indeed Job Listings"
+format: html
+editor: visual
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| include: false
+library(ggplot2)
+library(data.table)
+library(tidyr)
+library(dplyr)
+library(readr)
+library(stringi)
+library(stringr)
+library(knitr)
+data <- data.table(read.csv("data-analyst-2022-05-10.csv"))
+```
+
+::: panel-tabset
+## Cleaning
+
+```{r}
+#| echo: false
+#| warning: false
+#| include: true
+#| code-fold: true
+
+data[,X:=NULL]
+
+# return remote locaiton if remote is found in title
+data[, location := ifelse(grepl("Remote", title) | grepl("Remote", location)|
+                         grepl("remote", title) | grepl("remote", location),
+                         "remote", location)]
+
+# make column for province
+data[, location := as.character(location)]
+
+data[, province := ifelse(length(strsplit(location, " ")) > 1, 
+                          strsplit(location, " "),
+                          strsplit(location, " "))]
+
+data[, province := ifelse(location != "remote", toupper(str_sub(location,-2)),
+                          "remote")]
+
+# data[, remote := ifelse(grepl("Remote", title) | grepl("Remote", location)|
+#                          grepl("remote", title) | grepl("remote", location),
+#                          TRUE, FALSE)]
+```
+
+<!-- Format pay column by parsing salary string -->
+
+```{r}
+#| echo: false
+#| warning: false
+#| include: false
+#| code-fold: true
+
+# remove commas
+data$pay <- gsub(",", "", data$pay)
+
+# extract only numbers from pay
+data[, pay_extract := regmatches(pay, gregexpr("[[:digit:]]+", pay))]
+
+# split pay into 2 columns
+data <- data %>% unnest_wider(pay_extract)
+data <- data.table(data)
+
+# remove unwanted columns
+data[, c("...3","...4") := NULL]
+
+# change column names
+colnames(data)[7:8] <- c("low", "high")
+
+data$high <- as.numeric(data$high)
+data$low <- as.numeric(data$low)
+data[, rating := ifelse(rating == "NA", NA, rating)]
+
+# make a column for average pay
+data[, average := ifelse(is.na(high), low, (high + low)/2)]
+
+
+# get rid of original pay column
+data[, pay := NULL]
+
+# only include relevant columns
+data <- data[, c("title", "company", "location", "rating", "province", "average")]
+
+# change averge to pay
+colnames(data)[length(colnames(data))] <- "pay"
+
+```
+
+<!-- Format pay column by parsing salary string -->
+
+## Exploratory Data Analysis
+
+```{r}
+#| include: true
+#| warning: false
+#| code-fold: true
+
+# 1. Data Summary
+kable(summary(data))
+
+# 2. What companies have the best ratings?
+head(data[order(rating, decreasing=TRUE)][,c("company", "title", "rating")], 20)
+
+# 3. If the company is remote, what locations offer the best hobs
+# idea: plot all the geographies on a map
+data[,location:=as.factor(location)]
+
+# location by province
+ggplot(data, aes(x=province)) +
+  geom_bar() +
+  labs(title = "Number of Postings by Province",
+       x = "Rating",
+       y = "Count") 
+
+# return only rows with ratings
+ratings <- data[!is.na(rating)]
+
+# histogram
+# ggplot(data, aes(x=rating, color=remote, fill=remote)) +
+#   geom_histogram(binwidth=.1, col='red') +
+#   labs(title = "Ratings Distribution",
+#        x = "Rating",
+#        y = "Count") 
+
+
+
+
+```
+:::

@@ -1,0 +1,9 @@
+---
+title: "About This Project"
+---
+
+![](indeed-site.PNG)
+
+## Motivation
+
+As an aspiring data analyst, I am interested in the job prospects of this career in Canada and gain insight on the location of most of the jobs, their pay, and the rating employees give to their companies. Indeed.ca is a great place to find this information. I decided to scrape data form indeed.ca with python, and then clean the data and analyze it in R. This website presents my scraping, cleaning, and visualization methods in a clear and concise way. I hope you enjoy learning about my process and find the analysis interesting

@@ -1,0 +1,29 @@
+project:
+  type: website
+  render:
+    - index.qmd
+    - indeed-scraping.ipynb
+    - cleaning.qmd
+    - visualizing.qmd
+
+website:
+  title: "Data Analyst Job Insights in Canada"
+  navbar:
+    background: primary
+    left:
+      - href: index.qmd
+        text: Home
+      - href: indeed-scraping.ipynb
+        text: Scraping 
+      - href: cleaning.qmd
+        text: Cleaning
+      - href: visualizing.qmd
+        text: Visualizing
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+
+editor: visual
+
