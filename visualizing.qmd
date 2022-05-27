@@ -1,3 +1,221 @@
 ---
-title: "visualizing"
+title: "Visualizing Cleaned Data"
 ---
+
+![](visual-image.jpg)
+
+```{r}
+#| include: false
+library(data.table)
+library(DT)
+library(ggbeeswarm)
+library(ggplot2)
+library(knitr)
+library(naniar)
+library(plotly)
+library(dplyr)
+library(cowplot)
+library(forcats)
+data <- fread("cleaned_data.csv")
+
+# create boolean remote column for visualization
+data[, remote := ifelse(grepl("remote", title) | grepl("remote", location),
+                          TRUE, FALSE)]
+```
+
+## Data
+
+This is what the data looks like after it has been cleaned. Using the "DT" package the data can be sifted and searched in this table
+
+```{r}
+#| echo: false
+datatable(data)
+```
+
+### Add Boolean "remote" Column and Account for Hydrogeologists
+
+Hydrogeologists make up a portion of total Geologist Jobs. If the job title in the Geology Jobs contains the word "hydrogeologist", the "job" column will be changed from "geologist" to "hydrogeologist" to compare the difference between these professions in the field of Hydrogeology.
+
+```{r}
+# Split into two data.tables for individual analysis
+analyst <- data[job == "Data Analyst"]
+geologist <- data[job == "Geologist"]
+
+# if the title contains the word "hydrogeologist", change the job column to "hydrogeologist"
+geologist <- geologist[, job := ifelse(title %like% "hydrogeologist" | title %like% "Hydrogeologist", "Hydrogeologist", job)]
+```
+
+### Data Summary
+
+```{r}
+#| echo: false
+kable(summary(data))
+```
+
+### Missing Values Distribution
+
+Most companies on indeed don not provide pay information. In fact, we are only 32.52 jobs provide information regarding pay.
+
+Many employees rate their companies however. Only 32% of companies do not have ratings
+
+```{r}
+#| echo: false
+#| warning: false
+analyst_miss <- vis_miss(analyst) +
+  labs(title = "Data Analyst")
+geologist_miss <- vis_miss(geologist) +
+  labs(title = "Geologist")
+
+plot_grid(analyst_miss, geologist_miss)
+```
+
+## Pay Distribution
+
+::: panel-tabset
+### All Jobs
+
+```{r}
+#| code-fold: true
+
+# remove values below $20000 (values that fall within the $100-$20000 must be contract poitions and were not accoutned for when cleaing)
+pay_distribution <- data[pay > 20000]
+
+ggplot(pay_distribution, aes(job, pay)) +
+  geom_violin(aes(color=job)) +
+  geom_beeswarm(aes(color=job)) +
+  labs(title = "Pay Distribution Between Data Analyst and Geology Jobs",
+       y = "Yearly Salary (CAD)")
+```
+
+### Data Analyst
+
+```{r}
+#| code-fold: true
+pay_distribution_analyst <- analyst[pay > 20000]
+
+ggplot(pay_distribution_analyst, aes(remote, pay)) +
+  geom_violin(aes(color=remote)) +
+  geom_beeswarm(aes(color =remote)) +
+  labs(title = "Pay Distribution Between Remote and Non-Remote Data Analyst Jobs",
+       y = "Yearly Salary (CAD)")
+```
+
+### Geologist
+
+```{r}
+#| code-fold: true
+pay_distribution_geologist <- geologist[pay > 20000]
+
+ggplot(pay_distribution_geologist, aes(job, pay)) +
+  geom_violin(aes(color=job)) +
+  geom_beeswarm(aes(color =job)) +
+  labs(title = "Pay Distribution Between Geologists and Hydrogeologists",
+       y = "Yearly Salary (CAD)")
+```
+:::
+
+### Pay Distribuation by City
+
+The pay distribution divided based on location including remote jobs. Cities with less than 2 or fewer job postings have been removed from the data. This plot is interactive so the cities can be selected and viewed individually.
+
+```{r}
+#| code-fold: true
+#| warning: false
+# remove all cities with less than two entries to clean up box plot
+cities_analyst <- pay_distribution_analyst[with(pay_distribution_analyst, location %in% names(which(table(location)>=5))), ]
+
+ggplotly(ggplot(cities_analyst, aes(location, pay)) +
+  geom_boxplot(aes(color=location)) +
+  labs(title = "Pay Distribution Between Remote and Non-Remote Jobs",
+       y = "Yearly Salary (CAD)"))
+```
+
+```{r}
+#| code-fold: true
+#| warning: false
+# remove all cities with less than two entries to clean up box plot
+
+ggplotly(ggplot(geologist, aes(province, pay)) +
+  geom_boxplot(aes(color=province)) +
+  labs(title = "Pay Distribution Between Remote and Non-Remote Jobs",
+       y = "Yearly Salary (CAD)"))
+```
+
+This plot is not very informative due to the lack of information. For Geologist jobs, it may be more beneficial to look at the number of jobs in each city. Geology jobs are less likely to be remote and more dependant on where an individual actually wants to live
+
+### Number of Geologist Jobs Per City
+
+```{r}
+#| code-fold: true
+#| warning: false
+# remove all cities with less than two entries to clean up box plot
+ggplotly(ggplot(geologist, aes(fct_infreq(location))) +
+  geom_bar(aes(color=location)) +
+  labs(title = "Number of Geology Jobs Per City",
+       y = "Yearly Salary (CAD)",
+       x = "Location by") +
+  theme(axis.text.x = element_blank(),
+        legend.position = "bottom"))
+```
+
+## Rating Distribution
+
+::: panel-tabset
+### All Jobs
+
+```{r}
+#| warning: false
+#| code-fold: true
+ratings <- data[!is.na(rating)]
+
+ggplot(ratings, aes(job, rating)) +
+  geom_violin(aes(color=job)) +
+  geom_jitter(aes(color=job)) +
+  labs(title = "Rating Distribution Between Remote and Non-Remote Jobs",
+       y = "Yearly Salary (CAD)")
+```
+
+### Data Analyst
+
+```{r}
+#| warning: false
+#| code-fold: true
+ratings_analyst <- analyst[!is.na(rating)]
+
+ggplot(ratings_analyst, aes(remote, rating)) +
+  geom_violin(aes(color=remote)) +
+  geom_jitter(aes(color=remote)) +
+  labs(title = "Rating Distribution Between Remote and Non-Remote Jobs",
+       y = "Yearly Salary (CAD)")
+```
+
+### Geologist
+
+```{r}
+#| warning: false
+#| code-fold: true
+ratings_geologist <- geologist[!is.na(rating)]
+
+ggplot(ratings_geologist, aes(job, rating)) +
+  geom_violin(aes(color=job)) +
+  geom_jitter(aes(color=job)) +
+  labs(title = "Rating Distribution Between Remote and Non-Remote Jobs",
+       y = "Yearly Salary (CAD)")
+```
+:::
+
+## Best Companies To work for Based on Rating
+
+This is a list of the best companies to work for based on rating
+
+```{r}
+#| code-fold: true
+kable(head(data[order(rating, decreasing=TRUE)][,c("company", "title", "rating")], 20))
+```
+
+This is a list of the best companies to work for based on pay
+
+```{r}
+#| code-fold: true
+kable(head(data[order(pay, decreasing=TRUE)][,c("company", "title", "pay")], 20))
+```
