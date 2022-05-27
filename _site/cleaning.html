@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.9.180">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Data Analyst Job Insights in Canada - Cleaning Indeed Data</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+
+  <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="./">
+  <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="site_libs/quarto-search/fuse.min.js"></script>
+  <script src="site_libs/quarto-search/quarto-search.js"></script>
+  <script src="site_libs/quarto-html/quarto.js"></script>
+  <script src="site_libs/quarto-html/popper.min.js"></script>
+  <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="site_libs/quarto-html/anchor.min.js"></script>
+  <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "navbar",
+    "copy-button": false,
+    "collapse-after": 3,
+    "panel-placement": "end",
+    "type": "overlay",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+  <script src="site_libs/datatables-binding-0.23/datatables.js"></script>
+  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet">
+  <script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+  <link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+  <script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="fullcontent">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Data Analyst Job Insights in Canada</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./indeed-scraping.html">Scraping</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./cleaning.html" aria-current="page">Cleaning</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./visualizing.html">Visualizing</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header id="title-block-header" class="quarto-title-block default">
+
+<div class="quarto-title"><h1 class="title display-7">Cleaning Indeed Data</h1></div></header>
+<p><img src="clean-image.png" class="img-fluid"></p>
+<section id="cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning">Cleaning</h2>
+<p>Most of the columns scraped here are in good condition to start using. However, the pay column is currently in string format, and contains additional strings as well as ranges of salaries. The strings will need to be parsed and the numeric values extracted. To deal with salary ranges, the average of the range will be taken so we can represent pay as a single number</p>
+<section id="original-scraped-data" class="level3">
+<h3 class="anchored" data-anchor-id="original-scraped-data">Original Scraped Data</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 17%">
+<col style="width: 23%">
+<col style="width: 18%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">company</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: left;">pay</th>
+<th style="text-align: right;">rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">newJunior Data Analyst</td>
+<td style="text-align: left;">AppleOne</td>
+<td style="text-align: left;">Mississauga, ON</td>
+<td style="text-align: left;">$45,800 a year</td>
+<td style="text-align: right;">3.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst (Remote in Canada)</td>
+<td style="text-align: left;">Interaxon</td>
+<td style="text-align: left;">Remote in Toronto, ON</td>
+<td style="text-align: left;">$80,000 - $110,000 a year</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">newData Analyst (VBA,SQL)</td>
+<td style="text-align: left;">Sun Life Financial</td>
+<td style="text-align: left;">Temporarily Remote in Toronto, ON</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst/ Data Engineer/ Datawarehouse Analyst</td>
+<td style="text-align: left;">Shorewise Consulting LLC</td>
+<td style="text-align: left;">Remote in Mississauga, ON</td>
+<td style="text-align: left;">$47 an hour</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data Analyst - Level 3</td>
+<td style="text-align: left;">Libro Credit Union</td>
+<td style="text-align: left;">London, ON</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="creating-a-new-location-column" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-new-location-column">Creating a new location column</h3>
+<p>Many data analyst positions are remote. Many of the listings still contain the city where the company is based with the word “remote” somewhere in the location such as “Remote in Toronto, ON”. If we want to analyze this data based on whether positions are remote or not, it would be nice if the location column was categorical and every position with remote in the title could be grouped into one. Therefor, if a column contains “remote” or “Remote”, the string will be changed to “remote” in the location column.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># return remote location if remote is found in title</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data[, location <span class="sc">:</span><span class="er">=</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"Remote"</span>, title) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"Remote"</span>, location)<span class="sc">|</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">grepl</span>(<span class="st">"remote"</span>, title) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">"remote"</span>, location),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"remote"</span>, location)]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(data, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 20%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">company</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: left;">pay</th>
+<th style="text-align: right;">rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">newJunior Data Analyst</td>
+<td style="text-align: left;">AppleOne</td>
+<td style="text-align: left;">Mississauga, ON</td>
+<td style="text-align: left;">$45,800 a year</td>
+<td style="text-align: right;">3.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst (Remote in Canada)</td>
+<td style="text-align: left;">Interaxon</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">$80,000 - $110,000 a year</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">newData Analyst (VBA,SQL)</td>
+<td style="text-align: left;">Sun Life Financial</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst/ Data Engineer/ Datawarehouse Analyst</td>
+<td style="text-align: left;">Shorewise Consulting LLC</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">$47 an hour</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data Analyst - Level 3</td>
+<td style="text-align: left;">Libro Credit Union</td>
+<td style="text-align: left;">London, ON</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="creating-a-province-column" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-province-column">Creating A Province Column</h3>
+<p>If we want to organize jobs by province, we can parse the last two characters from the location column where the column != “remote” and matches one of the provinces from the list of province abbreviations provided.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a province column that takes the location column and splits the column into a list of strings</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data[, province <span class="sc">:</span><span class="er">=</span> <span class="fu">ifelse</span>(<span class="fu">length</span>(<span class="fu">strsplit</span>(location, <span class="st">" "</span>)) <span class="sc">&gt;</span> <span class="dv">1</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">strsplit</span>(location, <span class="st">" "</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">strsplit</span>(location, <span class="st">" "</span>))]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># take the last two characters from the last word in the list</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data[, province <span class="sc">:</span><span class="er">=</span> <span class="fu">ifelse</span>(location <span class="sc">!=</span> <span class="st">"remote"</span>, <span class="fu">toupper</span>(<span class="fu">str_sub</span>(location,<span class="sc">-</span><span class="dv">2</span>)),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"remote"</span>)]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(data, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 18%">
+<col style="width: 11%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">company</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: left;">pay</th>
+<th style="text-align: right;">rating</th>
+<th style="text-align: left;">province</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">newJunior Data Analyst</td>
+<td style="text-align: left;">AppleOne</td>
+<td style="text-align: left;">Mississauga, ON</td>
+<td style="text-align: left;">$45,800 a year</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: left;">ON</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst (Remote in Canada)</td>
+<td style="text-align: left;">Interaxon</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">$80,000 - $110,000 a year</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">remote</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">newData Analyst (VBA,SQL)</td>
+<td style="text-align: left;">Sun Life Financial</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: left;">remote</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst/ Data Engineer/ Datawarehouse Analyst</td>
+<td style="text-align: left;">Shorewise Consulting LLC</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">$47 an hour</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">remote</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data Analyst - Level 3</td>
+<td style="text-align: left;">Libro Credit Union</td>
+<td style="text-align: left;">London, ON</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: left;">ON</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="cleaning-the-pay-column" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-the-pay-column">Cleaning the Pay Column</h3>
+<p>The pay column presents some hurtles to overcome to extract numeric information. This is my process for doing so</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove commas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>pay <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">","</span>, <span class="st">""</span>, data<span class="sc">$</span>pay)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract only numbers from pay</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data[, pay_extract <span class="sc">:</span><span class="er">=</span> <span class="fu">regmatches</span>(pay, <span class="fu">gregexpr</span>(<span class="st">"[[:digit:]]+"</span>, pay))]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(data, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 17%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">company</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: left;">pay</th>
+<th style="text-align: right;">rating</th>
+<th style="text-align: left;">province</th>
+<th style="text-align: left;">pay_extract</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">newJunior Data Analyst</td>
+<td style="text-align: left;">AppleOne</td>
+<td style="text-align: left;">Mississauga, ON</td>
+<td style="text-align: left;">$45800 a year</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: left;">ON</td>
+<td style="text-align: left;">45800</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst (Remote in Canada)</td>
+<td style="text-align: left;">Interaxon</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">$80000 - $110000 a year</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">80000 , 110000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">newData Analyst (VBA,SQL)</td>
+<td style="text-align: left;">Sun Life Financial</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analyst/ Data Engineer/ Datawarehouse Analyst</td>
+<td style="text-align: left;">Shorewise Consulting LLC</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">$47 an hour</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">remote</td>
+<td style="text-align: left;">47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data Analyst - Level 3</td>
+<td style="text-align: left;">Libro Credit Union</td>
+<td style="text-align: left;">London, ON</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: left;">ON</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># split pay into 2 columns</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if there are two numbers (salary range), low number will be in the first column, high in second column</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># if there is one number, the number will be in the first column and "NA" in the second</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">unnest_wider</span>(pay_extract)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.table</span>(data)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove unwanted columns generated with "unnest_wider"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>data[, <span class="fu">c</span>(<span class="st">"...3"</span>,<span class="st">"...4"</span>) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># change column names</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data)[<span class="dv">7</span><span class="sc">:</span><span class="dv">8</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"high"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># make columns numeric </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>high <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data<span class="sc">$</span>high)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>low <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data<span class="sc">$</span>low)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># reformat null values as some are not readable</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>data[, rating <span class="sc">:</span><span class="er">=</span> <span class="fu">ifelse</span>(rating <span class="sc">==</span> <span class="st">"NA"</span>, <span class="cn">NA</span>, rating)]</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># make a column for average pay</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>data[, average <span class="sc">:</span><span class="er">=</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(high), low, (high <span class="sc">+</span> low)<span class="sc">/</span><span class="dv">2</span>)]</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># get rid of original pay column</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>data[, pay <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># only include relevant columns</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data[, <span class="fu">c</span>(<span class="st">"title"</span>, <span class="st">"company"</span>, <span class="st">"location"</span>, <span class="st">"rating"</span>, <span class="st">"province"</span>, <span class="st">"average"</span>)]</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># change "average"average" column as the new "pay" column</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data)[<span class="fu">length</span>(<span class="fu">colnames</span>(data))] <span class="ot">&lt;-</span> <span class="st">"pay"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="now-this-is-what-our-cleaned-data-looks-like" class="level3">
+<h3 class="anchored" data-anchor-id="now-this-is-what-our-cleaned-data-looks-like">Now this is what our cleaned data looks like</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-6a83fac98be934e49a32" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6a83fac98be934e49a32">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","443","444","445","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","471","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","542","543","544","545","546","547","548","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569","570","571","572","573","574","575","576","577","578","579","580","581","582","583","584","585","586","587","588","589","590","591","592","593","594","595","596","597","598","599","600","601","602","603","604","605","606","607","608","609","610","611","612","613","614","615","616","617","618","619","620","621","622","623","624","625","626","627","628","629","630","631","632","633","634","635","636","637","638","639","640","641","642","643","644","645","646","647","648","649","650","651","652","653","654","655","656","657","658","659","660","661","662","663","664","665","666","667","668","669","670","671","672","673","674","675","676","677","678","679","680","681","682","683","684","685","686","687","688","689","690","691","692","693","694","695","696","697","698","699","700","701","702","703","704","705","706","707","708","709","710","711","712","713","714","715","716","717","718","719","720","721","722","723","724","725","726","727","728","729","730","731","732","733","734","735","736","737","738","739","740","741","742","743","744","745","746","747","748","749","750","751","752","753","754","755","756","757","758","759","760","761","762","763","764","765","766","767","768","769","770","771","772","773","774","775","776","777","778","779","780","781","782","783","784","785","786","787","788","789","790","791","792","793","794","795","796","797","798","799","800","801","802","803","804","805","806","807","808","809","810","811","812","813","814","815","816","817","818","819","820","821","822","823","824","825","826","827","828","829","830","831","832","833","834","835","836","837","838","839","840","841","842","843","844","845","846","847","848","849","850","851","852","853","854","855","856","857","858","859","860","861","862","863","864","865","866","867","868","869","870","871","872","873","874","875","876","877","878","879","880","881","882","883","884","885","886","887","888","889","890","891","892","893","894","895","896","897","898","899","900","901","902","903","904","905","906","907","908","909","910","911","912","913","914","915","916","917","918","919","920","921","922","923","924","925","926","927","928","929","930","931","932","933","934","935","936","937","938","939","940","941","942","943","944","945","946","947","948","949","950","951","952","953","954","955","956","957","958","959","960","961","962","963","964","965","966","967","968","969","970","971","972"],["newJunior Data Analyst","Data Analyst (Remote in Canada)","newData Analyst (VBA,SQL)","Data Analyst/ Data Engineer/ Datawarehouse Analyst","Data Analyst - Level 3","Junior Data Analyst","newData Analyst","newInventory Control Analyst","newData Analyst Specialist for compiling TV Attribution Reports...","newLead Data Analyst","newData Analyst - Sportsbook","newData Analyst","Health Data Analyst - Full Time","newTechnology &amp; Innovation Research Analyst (Summer Student","newIT Business Analyst - Capital Markets","newIT Business Analyst - Capital Markets","newHealth Data Analyst","newBudget Analyst - Permanent Position","newBusiness Intelligence &amp; Data Analyst","newIncentives Analyst","Data Analyst/ Data Engineer/ Datawarehouse Analyst","newData Analyst â€“ Subscription Analytics","newData Analyst","newAutomations Analyst","newLogistics Data Analyst Fall Co-op","Business Analyst (Technical &amp; Data)","newResearch Analyst","Business Data Analyst","newISO 20022 Analyst","Marketing Data Analyst","newMarketing Data Analyst","newPCAS22 - 058 - Analyst, Data Intelligence (2 Year Contract)","Revenue Analyst - WestJet Vacations","Data Analyst","newRBC Wealth Management, Fall 2022 Co-op, Business Data Analys...","Business Analyst (digital technology) - Contract - Remote","newJunior Data Analyst","newDATA MANAGEMENT AND REPORTING ANALYST","Data Engineer (Business Analyst)","newData Analyst - Term","newBusiness Intelligence Analyst - Decision Support","Data Analyst","newRating Analyst","newHR Data Analyst (Data Governance)","Junior Business Analyst (remote)","newData Analyst","newJunior Data Analyst","newAnalyst III","Data Analyst","newSenior Data Analyst","Data Analyst","2022 FALL Student - Data Analyst Student","newTransportation Operations Analyst, Shopify Fulfillment Netwo...","newData Analyst","newMobile Services Analyst","HRIS Analyst - Dayforce","newBusiness Analyst","Jr. Data/Reporting Analyst","newJr Business Analyst","newData Analyst, Competitive Intelligence","newData Analyst","newData Analyst","newMaster Data Analyst, Supply Chain-Contract 1 Year","newCrime Analyst","Data Analyst - Logistics","newData Quality Analyst Centre for Depression and Sui","newData Analyst","Data Analyst - Remote","newData Analyst","Data Analyst","newData Analyst","Business System Analyst","newData Analyst, Business Intelligence, CP2","newRBC Wealth Management, Fall 2022 Co-op - Business Risk &amp; Dat...","Analyst","newPS Systems Analyst","newData Analyst","Business Data Analyst - Life Sciences &amp; Healthcare, Omnia AI","newAnalyst - Compensation","Data Analyst","newBusiness Analyst/Consultant","Business Intelligence Specialist","newData Analyst","newSenior Developer Analyst, Data and Personalization | TELUS D...","Data Analyst - Contractor","Microbiology Analyst (Inventory)","Data and Process Analyst - Accreditation","newData Support Sr Analyst","Data Analyst","Analyst, Data Strategy Fall 2022 Student","newBusiness Analyst","newData Analyst - Reporting","Data Analyst","newBusiness Data Analyst","newData Centre Analyst","Data Analyst, Traction Rec","Junior Data Analyst","newData Reporting Analyst","Engagement Data Analyst","Data Analyst","newMarketing Analyst","newDesktop Support Analyst","newSenior Investment Data Analyst","Data Analyst","newSpend Analytics Analyst","newBusiness Data Analyst","newData Centre Analyst","Data Analyst, Traction Rec","Junior Data Analyst","newData Reporting Analyst","Engagement Data Analyst","Data Analyst","newMarketing Analyst","newDesktop Support Analyst","newSenior Investment Data Analyst","Data Analyst","newSpend Analytics Analyst","newBusiness Analyst/Data Analyst","newFOREST ANALYST INTERN","newBusiness Information Systems Analyst","Business Analyst","newData Analyst","newSenior Data Analyst","newRemarketing Pricing Analyst","newDatabase Analyst","newWORKFORCE ANALYST","Digital Marketing Analyst","QA Analyst","Marketing Analyst, Google Hardware","Data Analyst","newData Ops Analyst","Logistics Analyst","Data Analyst","Sr Data Analyst","newBusiness Analyst","newBusiness System Analyst","Senior Data Analyst","newIT Junior Data Analyst","newBusiness Analyst","newManager Digital/Data Analyst","newData Analyst, Data Products IA (Fall 2022 Student)","Business Analyst","newIT Quality Analyst","newForecasting &amp; data analyst, Analytics &amp; Modelling","newHealth Data Analyst Summer Student","Geophysicist/Data Analyst NEW","newData Analyst, Business Intelligence","Innovation Researcher and Analyst, Advisory","newBusiness Operations Analyst","newBusiness Analyst","newBusiness Operations Analyst","newBusiness Analyst","SAP MDM Data Analyst","newJr. Business Analyst","newBusiness Analyst","newSupply Chain Analyst","Sr Data Analyst","In-line Inspection Data Analyst","newMarketing Technology Analyst","newSenior Data Analyst","Resource Management Data Analyst","newData Analyst","Distribution Data Analyst (12 Month Contract)","newSenior Analyst - CPG Manufacturer","newBusiness Systems Analyst","Data Analyst","Business Analyst","SUPPLY CHAIN ANALYST","newJr. Business Analyst","Data Analyst","Revenue Analyst","Business Systems Analyst (Entry Level)","Data Analyst (Business Intelligence)","Senior Business Data Analyst","computer systems business analyst","Data Analyst","newPricing Analyst","Systems &amp; Data Analyst","Data Analyst II (Canada Remote)","Data Analyst - theScore Bet","Data Analyst - theScore Bet","Junior Business Analyst","newBusiness Analyst","Business Intelligence (BI) Developer &amp; Data Visualization An...","Junior Business Analyst","Data Analyst (Remote)","Data Analyst - Geophysics","newMarketing Analyst","Data Analyst: Neurodiversity Hiring Initiative","newdatabase analyst","Data Analyst","Data Analyst","newBusiness Systems/Technical Analyst","ETL Developer - Business Intelligence","newSenior Business Analyst, Consumer Lifecycle","Business Intelligence (BI) Developer &amp; Data Visualization An...","Junior Business Analyst","Data Analyst (Remote)","Data Analyst - Geophysics","newMarketing Analyst","Data Analyst: Neurodiversity Hiring Initiative","newdatabase analyst","Data Analyst","Data Analyst","newBusiness Systems/Technical Analyst","ETL Developer - Business Intelligence","newSenior Business Analyst, Consumer Lifecycle","Analysts Recruitment and Development Program - Social Statis...","Jr. Data Analyst (supply chain and demand planning)","newSync Operator/Data Analyst","newDecision Support Analyst","Data Analyst","Data Analyst, Service Innovation","Senior Systems Analyst","newBusiness Systems Analyst","Data Analyst","Research Officer/Policy Analyst","Business Analyst","newIntermediate Data Analyst, ES-03","newSenior Business Analyst - Services Analytics","newAI Engineering Business Analyst, Intact Lab","SAP Data Analyst","newData Strategy and Operations Analyst","QA Analyst","Data Analyst","Geophysical Data Analyst","newAnalyst, Physical Inventory","newOperations Analyst","Technical Business Analyst (remote)","Media Experts - Analyst, Audience &amp; Analytics","Game Data Analyst","newData Analyst - Information and Systems","newData Analyst/Programmer","Data Analyst/ Data Engineer/ Datawarehouse Analyst","DATA ANALYST - US","newBusiness System Analyst 1","newBusiness System Analyst","newBusiness Analyst","Data Analyst","newData Analyst","newBusiness Analyst","Business Analyst","Data Analyst","Production Operations Analyst, Planning (Cambridge)","newBusiness Analyst","Performance Analyst","newData Analyst","newReplenishment Analyst","newDigital Health Analyst","Data Analyst - Sportsbook","information systems analyst - computer systems","investment analyst","Analyst","Business Intelligence Developer","Energy Data Analyst","Performance Analyst","newData Analyst","newReplenishment Analyst","newDigital Health Analyst","Data Analyst - Sportsbook","information systems analyst - computer systems","investment analyst","Analyst","Business Intelligence Developer","Energy Data Analyst","Business Intelligence Analyst / Analyste en informatique dÃ©c...","newSenior Data Analyst","Policy Analyst","Technical Sr. Analyst","Data Analyst - FIFA Mobile","Data Analyst Full-time","Inventory Analyst","Business Analyst (Contract - 3 months) - Remote, Across Cana...","Information Management Analyst","newSecuritization and Funding Analyst","newAssociate Analyst 3 - Toronto","newBI Business Analyst","newSenior Data Analyst - Remote","newAnalyst, Business Intelligence","Reporting Data Analyst","Senior Data Analyst","newSenior Analyst, Trade Support (End of Day)","Analyst- Strategy &amp; Transformation","Business Data Analyst, Propel","Technical Specialist, Business Intelligence","Physical Security Analyst (New Grad)","newBusiness Intelligence Analyst (SK)","Data Analyst","Cyber fraud analyst","Information Systems Analyst","Anaplan Business Analyst","Data Visualization Business Analyst","Data Analyst &amp; Business Intelligence â€“ Bombardier Defense","Research Analyst","newJunior Business Analyst","Data Analyst (Tableau), X-Ray","Senior Data and Reporting Analyst - #CStech","Data Analyst- Contract","Data Analyst","newDevelopment Coordinator/Analyst","Anaplan Business Analyst","Data Visualization Business Analyst","Data Analyst &amp; Business Intelligence â€“ Bombardier Defense","Research Analyst","newJunior Business Analyst","Data Analyst (Tableau), X-Ray","Senior Data and Reporting Analyst - #CStech","Data Analyst- Contract","Data Analyst","newDevelopment Coordinator/Analyst","Data Analyst","Data Analyst","Intern- Business Intelligence Analyst","HR Analyst","Data Analyst, Marketing Acquisition (Remote)","newData Quality Analyst","Data Insight and Reporting Analyst","newJr. Business Analyst","Data Analyst, Operations and Investigations (NEW or RECENT G...","Senior Data Analyst","data analyst - informatics and systems","newWRPS Business Analyst","Planning Data Analyst","ADMN O 18R - Junior Data Analyst","IT Business Analyst","newBusiness Analyst","Data Analyst","Junior Database Analyst","Master Data Analyst","newData Analyst, Commercial Technology","Data Analyst, SQL/Tableau Developer","newData Analyst","newmarketing analyst","Data Analyst","Analyst - Procurement","newFUNCTIONAL ANALYST, IT BUSINESS SOLUTIONS","Business Analyst","newHRIS Analyst","Business System Analyst","newPhysical Security Analyst","newIT Analyst II - Business Intelligence Developer","newData Analyst","Junior Business Analyst","Data Analyst, Financial Crime Analytics","Marketing Data Analyst","Analyst - Procurement","newFUNCTIONAL ANALYST, IT BUSINESS SOLUTIONS","Business Analyst","newHRIS Analyst","newPhysical Security Analyst","newIT Analyst II - Business Intelligence Developer","newData Analyst","Junior Business Analyst","Data Analyst, Financial Crime Analytics","Marketing Data Analyst","BI Analyst","Policy Analyst (Remote)- First Peoples Wellness Circle","Data Analyst","Marketing Analyst","Product Data Analyst- Remote- Ontario","Business Analyst","Data Analyst (Analytics Platform)","STO 21R - Geospatial Analyst","Business System Analyst","newData Analyst","newIT (information technology) business analyst","Business Analyst, EDI Systems &amp; Projects","Data Analyst (Fixed-Term, 12-months)","newFall 2022 Co-op: Data Experience &amp; Business Analyst","newEvaluation and Data Analyst","Data Analyst/ Data Engineer/ Datawarehouse Analyst","newSr. Business Analyst","Sr Pricing Analyst","newManager, Business Analyst - Customer Insights Data &amp; Analyti...","Contracts Analyst ()","Data Analyst, Personalized Customer Incentives","newGlobal Operational Readiness Analyst","Senior Data and Reporting Analyst","Data Analyst","Research &amp; Asset Management Analyst","newSenior Business Analyst","newData Science Analyst","data warehouse analyst","newSenior Data Management/BI Analyst","Operations Analyst","Data Analyst","Data Analyst - Sportsbook","newAssociate Business System Analyst","newSr. Data Analyst","Business Analyst","newAssociate Business System Analyst","newSr. Data Analyst","Business Analyst","Data Analyst - Land","Business Analyst/ Consultant","newBusiness Analyst","Support Data Analyst (Python)","newSenior Associate Data Analyst -Monetization (Google Ad Manag...","Data Analyst","newAnalyst, Business Insights (Remote)","newIT Business Analyst (Data Stage)","Data Analyst","newMarketing Data - Analyst","Associate, Business Analyst","Business Data Analyst - Government &amp; Public Sector, Omnia AI","Data Analyst","Junior Business Analyst","Market Data Analyst","newBUSINESS ANALYST CITY CLERKS OFFICE","Master Data Analyst","Rating Analyst - ABS Cash Flow","Data Analyst","newBusiness Analyst - 1 Year Contract","Senior Market Research Analyst","Product Analyst","newMarketing Analyst","Analyst, Credit Risk","newAnalyst, FX Confirmations","newMarket Data Analyst","newBusiness Analyst","Digital Email Marketing Data Analyst (Revenue)","Business Analyst - Banking","Data Analyst - Reporting","newBusiness Analyst Student, Transportation Operational Analysi...","newBusiness Analyst","newPricing Analyst","Business Analyst","Business Analyst","Business Analyst Associate Manager","CPFR Analyst","newCosting Analyst","Reporting Analyst","Cost &amp; Scheduling Analyst","newBusiness Operations Analyst I, AWS Commerce Platform Busines...","DATA ANALYST","newBusiness Operations Analyst I, AWS Commerce Platform Busines...","DATA ANALYST","newData Analyst, System Optimization","Data Analyst (Growth-Marketing)","HR Data Analyst","Asset Management Analyst","Business Analyst - DW/ETL","Data Visualization Consultant, Omnia AI","Data Analyst","newBusiness Analyst","Business System Analyst","E-Commerce Analyst","Data Analyst - Energy","newBusiness Immigration Analyst","newBusiness Analyst","GIS Data Analyst","Support Analyst","newAcademic Quality Data Analyst","newUser Research Analyst","newAnalyst, Inventory","Senior Analyst, Canadian Fixed-Income Operations","Senior Data Analyst","newServices Operations Analyst","newSystems Analyst â€“ PeopleSoft","Business Analyst","Sr. Data Science Analyst","HCM - IT Support Analyst","Business + Data Analyst","Data Analyst II (Data Science/ML)","Associate Analyst (entry level) Data Lineage &amp; Control","Associate Analyst (entry level) Data Lineage &amp; Control","Business Analyst","newBusiness Intelligence Analyst","Business Analyst 3","Actuarial Analyst - Data Science","newMDM Business Analyst","Data Analyst","newKnowledge Management &amp; Translation Analyst","Senior Data Analyst","Fraud Analyst, Deposit Fraud","newSENIOR SYSTEM ANALYST LEAD PROGRAMMER","Agile Business Analyst (Remote)","Business Development Analyst (Paid Internship)","Customer Service Analyst","newBusiness Systems Analyst - Summer Student","newBusiness Systems Analyst - Summer Student","Analyst, Business Intelligence","newAnalyst, Engineering V&amp;V","newBusiness Analyst","newBusiness Systems Analyst","Business Analyst","newPolicy Analyst (Regional Parks)","Programmer Data Analyst-Mississauga-Officer/C11","Remedy System Analyst","newBusiness Intelligence Analyst Co-op","Data Analyst","Procurement Operations Analyst - Brampton, ON","newSenior Web Analyst","DA Receipt Quality Analyst","IT Business Analyst","Data Analyst, Business Intelligence (Toronto)","Sr. Business Analyst","newBusiness Analyst","Business Operations Analyst (BMT)","Business Analyst","Analyst, Data Solutions (Toronto)","newFire Policy &amp; Procedure Analyst","Policy Analyst â€“ Fisheries Sector","IT Computer Systems Analyst 2022 - Remote","newGIS Analyst","HRIS Analyst","Analyst, Data Management","Strategy Analyst","newSupport Desk Analyst - Tier 2","newBusiness Operations Analyst II, AWS Commerce Platform Busine...","newBI Analyst (Montreal/Columbus/North America)","newBusiness Analyst","Lead Data Analyst","newInternal Control - Regulatory Controls, Regulatory Data Anal...","newCustomer Supply Chain Analyst (Hybrid Work Model)","Senior Data Analyst","newResearch Analyst","Media Analyst","newAnalyst, BSC Logistics Materials","newBusiness Analyst","newValidation Analyst","newActuarial Analyst: Neurodiversity Hiring Initiative","Business Analyst, Strategic Projects","Associate Business Analyst","Data Analyst (3-6 Month Contract)","Business Analyst, Strategic Projects","Associate Business Analyst","Data Analyst (3-6 Month Contract)","Digital Marketing Analyst","Business Analyst","newBusiness Systems Analyst","Digital Analyst (Remote)","Data Analyst - Mobile QV","Data Analyst","Junior Pricing Analyst","Analyst, CRM Support &amp; Operations (18-month contract)","Sr Operational Ex Analyst","newSenior Data Analyst BHJOB13022_12127","Business Analyst - ETL, Data","Data Analyst","Data Analyst","Sr. Business Analyst","technical support analyst - systems","Analyst - Reliability &amp; Technical Support","newBusiness Analyst, Process Optimization","Sr. Data Analyst, Product Operations","newProcess Analyst, IT Asset Management","Systems Analyst - Enterprise Architecture","newAccounts Receivable Cash Application Analyst","Data Management/Data Analyst","Business Support Analyst","newWorkforce Analyst","newSAP Master Data Analyst","Senior Data Analyst","Data Analyst","Data Analyst - Reporting","Business Analyst","Data Analyst - Paradigm Quest","Kronos Functional Analyst","newWILDLIFE RESEARCH ANALYST","Data Analyst","newSr. Business Systems Analyst","newSAP Data Analyst","Sr. Data Analyst, MRM","Financial &amp; Data Analyst Fall 2022 Student","Data Analyst/ Data Engineer/ Datawarehouse Analyst","newBusiness Analyst","Risk Data Analyst","Sr Data Analyst, Sports","newTD Innovation Lab - Business Analyst Co-op","Program Management Office (PMO) Analyst","newData Analyst and Report Writer","Business Analyst","Security Data Analyst","Loyalty Data Analyst","computer systems analyst","newSTO 21R - GIS Analyst","newLead Business Analyst, Technology &amp; Data Delivery","Data Analyst","newDNA PRODUCT LINE ANALYST","newHR Systems and Business Analyst (Vancouver - Remote)","database analyst","Data Governance Analyst","Analyst, Economic Advisory","newQuality Assurance Analyst","Data Analyst, Product Management","Innovation Analyst (Up to 24 Months) - J0422-0885","newCustomer Supply Chain Analyst","Data Analyst","Business and Reporting Analyst","newSenior Legislative and Policy Analyst","newBusiness Intelligence Analyst","Business System Analyst","newDigital Marketing Analyst","Business Analyst","newInventory Control Analyst","newBusiness Intelligence Analyst","Settlements Analyst","data warehouse analyst","Senior Data/Report Analyst","Settlements Analyst","data warehouse analyst","Senior Data/Report Analyst","Data Analyst","marketing analyst","Analyst, Client Data Analytics","Business Insights Analyst","Business Analyst","Routing &amp; Scheduling Analyst","Research Analyst â€“ Land and Development","newPower BI Developer","newSupply Chain Data Analyst","analyst - market research","BUSINESS ANALYST","newANALYST, INTERNATIONAL STUDENT SERVICES","newBusiness Systems Analysts for BI Projects","Pricing Analyst","Supply Chain Analyst","business intelligence analyst","Customer Experience Analyst","Senior Data Analyst","Coordinator/Analyst, Citizenship Operations","Master Data Mgmt Analyst","Data Analyst, Inventory Partnerships (Toronto)","Business Analyst","newSenior AML Advisory Analyst","DEVELOPER / DATA ANALYST","Business Data Analyst, Investment Analytics","Sr. Data Analyst, MRM","Project Analyst II","newIT (information technology) business analyst","Quantitative Analyst","Technical Business Analyst","Business Analyst I - TELUS Health","newIT Technology Support Analyst I","newSenior Data Analyst","Data Analyst","Business System Analyst","Data Analyst // Analyste(e) des donnÃ©es","Data Analyst","Business Intelligence Developer","Data and Reporting Analyst","newBusiness Analyst","newSenior QA Analyst","BI Analyst, Data Operations","Analyst, Data &amp; Analytics Access Mgmt.","newNews and Media Analyst","Business Analyst, Sustainability","Technical Business Analyst","newBusiness Analyst Co-op [Ecosystem]","Business analyst","Senior Business Analyst","Senior Business Analyst- Digital Services Team","Business Analyst - IT / Operations","Data Analyst","Observer Analyst","Data Analyst Intern, HR","marketing analyst","Inventory Analyst","iGAMING ANALYST","Business Analyst","Sr Business Systems Analyst","Senior Business Analyst","newBusiness Analyst, Technology","newGBP Analyst, Strategic Pricing - Fall 2022 Internship","newSENIOR BUSINESS ANALYST-DECISION SUPPORT","Marketing Analyst","Cloud Business Analyst","Sr. Business Data Analyst","newBI Specialist","Quality Assurance Analyst - Data","newManager, Business Intelligence","Data Analyst","Business Intelligence Analyst","Associate Analyst 3 - Toronto","newManager, Business Intelligence","Data Analyst","Business Intelligence Analyst","Associate Analyst 3 - Toronto","Business Analyst with Sentry experience","Functional Analyst, BI &amp; Analytics","Marketing Science Analyst","BUSINESS SYSTEMS ANALYST (III)","newElectronic Health Record (EHR) Systems Analyst (multiple vac...","newBusiness &amp; Workforce Management Analyst","Senior BI Specialist","Anti-Money Laundering (AML) Risk Analyst","newHRIS Analyst â€“ Workday","Junior Business Analyst, IT","Research Project Manager and Data Analyst","RES 0 24R - Marketing Data Analyst***AMENDED CLOSE DATE***","Analyst Pharmacy and Liquor","Business Data Analyst, Data Management","newbusiness systems analyst","Business Analyst","Marketing Data Analyst","Lead Business Intelligence Analyst","Data Visualization Engineer","newBusiness Intelligence Specialist","Jnr Business System Analyst","newBMO Insurance Service Centre (BISC) Analyst","Business Analyst: Neurodiversity Hiring Initiative","newSenior Analyst, Data Analytics","Data Engineer/Analyst","newData Analyst","Business Systems Analyst I","Data Analyst, Omnia AI (CDC)","newBusiness Analyst","Business Intelligence Analyst","Junior Clinical Trials Data Analyst (Hybrid)","newIT Business Analyst","Systems Analyst","Jira Business Systems Analyst","Customer Experience Strategy Analyst","newBusiness Systems Analyst","Business Intelligence Analyst","Sales Data Analyst","newIndustrial Planning Analyst","newSr. Business Systems Analyst - Hybrid","Master Data Analyst","Data Governance Analyst","Corporate Analyst-CDN","newPlanning &amp; Research Analyst, Affordable Housing","Intermediate Business Analyst, Data and Analytics","Junior CRM Business Analyst","ANALYSTE DE DONNÃ‰ES/ DATA ANALYST","newBusiness Systems Analyst","marketing analyst","Payroll Administrator and Analyst","Marketing Database Analyst","Network Analyst (IP &amp; WAN)","Analyst â€“ Investment Banking","Business Intelligence Analyst","Business Analyst","Business Intelligence Analyst","Pricing Analyst","computer systems analyst","Planning Information Analyst","Data Analyst","Business analyst","newBusiness System Analyst","Business Analyst","Senior Analyst, Data Management - IT","Fraud Analyst, Deposit Fraud","newData Analyst","IT Business Analyst","Strategic Planning and Information Analyst #507","iGaming Analyst","database analyst","Business System Analyst â€“ SQL, Data","database analyst","Business System Analyst â€“ SQL, Data","QC Analyst 1 - Afternoon shift","Market Intelligence Analyst","newBusiness Analyst","newSecurity Analyst","Junior Power Analyst","newAnalyst - Trading Business Management (6 Months Contract)","newAnalyst, Digitization &amp; Optimization Intern / Co-Op","Business Systems Analyst III (BluePrism / RPA)","Business Analyst â€“ Data Modelling","newRES O 24R - Senior Data Analyst","Data Operations Analyst - Bedford, NS (Fall 2022 Student)","newData Analyst","newData Analyst, Valuation &amp; Advisory Services (Western Region)","Data Analyst","IT Business Analyst","Business Analyst","Market Data Operation and Engineering Analyst","IT Asset Management Analyst","Data Analyst","Payroll Analyst","newFall 2022 Co-op: DevOps Analyst","Business and Policy Analyst","Media Experts - Data Analyst, Audience &amp; Analytics","Digital Business Analyst","Senior Data Analyst","Valuation Analyst","newBusiness Analyst, Pulp","Sales Operation Analyst","newBusiness Operations Coordinator/Analyst","Analyst","Data Analyst/Engineer","newTechnical Business Analyst","newBusiness Systems Analyst II","Data Analyst","newAnalyst, Enterprise Risk Management","Business Analyst, Analytics and Automation","Supply Chain Analyst, Parts Management (Cambridge)","Junior Asset Management Consultant and Data Analyst","newBusiness Analyst","Data Analyst, Valuation Solutions","Analyst, Artificial Intelligence","Systems Performance Analyst","Business Systems Analyst","newAnalyst, Actuarial Solutions","BUSINESS ANALYST - 6 MONTH TEMPORARY ASSIGNMENT","DATAÂ SIMULATIONÂ ANALYST, AREA X.O (24-Mon Term)","Operations Specialist/Business Analyst supporting Capital Ma...","Business Analyst","newAnalyst","Data Analyst, Sales and Support (Americas, Remote)","Data Privacy Analyst - REMOTE - Canada","information systems business analyst","Technology Analyst (DiscoverIT Program)","Business Intelligence Analyst","Technical Business Analyst","Data Analyst","newSr Business Info Mgmt Analyst","Business System Analyst","Data Visualization Analyst - Senior","newFull-time Salesforce Application Administrator/Business Anal...","Data Analyst (Power BI) - REMOTE","Business Analyst","STATISTICAL ANALYST","Logistics Analyst","Business Analyst (2022-0106)","Insights Analyst","Data Management Analyst","Business Analyst - Incident Data (remote)","Business Information Systems Analyst","Business Analyst (Toronto)","newData Analyst","newDATA ANALYST","newTechnical Key Account Analyst","newDATA ANALYST","newTechnical Key Account Analyst","Analyst I, Identity and Access Management","Business Systems Analyst","information systems analyst - computer systems","newSenior Business Analyst, Transaction Data Master","Data Analyst/ Data Engineer/ Datawarehouse Analyst","newBusiness Intelligence Developer","Market Research Analyst","Business Analyst","newBusiness Analyst","Business Intelligence Analyst","Sr. IT Ops Analyst (Data Backup &amp; Protection)","Real Estate Market Analyst","Reporting and Data Analyst - Office of The Registrar","newTechnical Analyst, Water Quality &amp; Compliance","Business Analyst","Research Project Manager and Data Analyst","Lab Clinical Data Analyst","newBusiness Intelligence Partner, Regular Full Time, Ottawa","newBusiness System Analyst â€“ AWS, DWH, SQL","systems analyst","Research Associate - Biostatistical Research Analyst","newAnalyst, Payroll &amp; Data Services","Business Analyst","marketing analyst","LMS Analyst","newSenior BI Analyst","newBusiness Systems Analyst","newBusiness Analyst (Change Management &amp; Major Incident) (Tempo...","Intermediate Data Analyst","newData Industrialization Analyst","Data Analyst","IT Business Analyst","Research Analyst I, Epidemiology","business systems analyst","information systems business analyst","Fraud Analyst, Digital Banking","information technology (IT) analyst","Senior Business Analyst","newQA Analyst - Python Automation Testing","Business Support Technical Analyst (CAD) - AMENDMENT","Workday Data Conversion Analyst","Data Analyst II","newStudent, Cloud Analyst (Fall 2022, 4-Months)","Business Analyst","Business Data Analyst","Business Systems Analyst III","Senior Business Analyst, BSS","computer systems analyst","newBusiness Analyst, Human Resources","Product Business Analyst-Student Information System","Portfolio Data Analyst","IT Business Analyst (Contractor Position)","Data Analyst - Bilingual","business systems analyst","newBusiness Operations Analyst","Data &amp; Reporting Analyst","Data Loss Prevention Analyst - Data Protection","Billing Analyst - Logistics","Data Analyst","newIT Business Analyst BHJOB13022_12170","Business Intelligence (BI) Analyst","Fraud Analyst, Digital Banking","Business Systems Analyst - Global Engineering &amp; Operations (...","Business Analyst-Digital","Sustainability Analyst","Sr Business Insights Analyst","newMarket Analyst","Innovation Analyst (up to 24 months)","newAnalyst","Business Analyst, RIS (Retail Information Systems) Help Desk","Global Business Analyst - Retail","Content Research Analyst, SEO","Analyst Intern, Risk Advisory - Fall 2022 - Multiple Locatio...","Content Research Analyst, SEO","Analyst Intern, Risk Advisory - Fall 2022 - Multiple Locatio...","Operations Analyst","IT Business Analyst","Data Analyst (Hybrid)","HR Systems Analyst","BI Developer","Data Analyst","Business Analyst","Senior Data Analyst","Business Analyst, Human Resources (Hybrid Work)","Senior Data Analyst (IAM) (GCS)","Developer Analyst","Business Analyst","Senior Data Support Analyst - Market Risk","Data Visualization Analyst - Senior","Customerâ€¯Support Analyst - Accounting Software Support","Real Estate Advisory Analyst (Remote)","newSr. Data Warehouse and BI Specialist","newPRICING ANALYST","Associate BI Business Analyst, Business Technology- Canada,...","HR Systems Analyst","Data Analyst, Finance","Agile Business Analyst (On-site)","Process Automation/Data Analyst","Analyst - Business Intelligence","Technical Support Analyst","Part-Time - Data Quality Analyst (Fraud Prevention)","Quality Data Analyst","Business Analyst","Part-Time - Data Quality Analyst (Fraud Prevention)","Quality Data Analyst","Business Analyst","Data Analyst","Sr. Data Analyst","newBusiness Strategy Analyst","Analyst, People Analytics","data warehouse analyst","Business Process Analyst","Analyst â€“ Reporting and Analytics (Bilingual, French and Eng...","newAnalyst, Business Intelligence","Senior Service Delivery Analyst, Operational Reporting","Forest Analyst","newBusiness &amp; Customer Insights Analyst","Digital Marketing Business Insights Analyst","newBusiness Analyst II, Data Integration","newSenior Analyst, Clinical Analytics","newBusiness Analyst, Merchandising Operations &amp; Strategy â€“ MET","newIT Business Systems Analyst","Analyst, Off-Shelf","HR Reporting Analyst","newAnalyst, Technology","newInventory Analyst","Business Intelligence Analyst","newInventory Analyst &amp; Coordinator","Bilingual Technical Business Analyst","Senior Business Management Analyst","newAnalyste dâ€™affaires / Business Analyst - CFF","Planning Analyst","BI Developer - Barrie Ont (Hybrid)","Analyst programmer, Bell Media","PM BI expert","Marketing Analyst Coordinator","newBusiness Analyst, Governance &amp; Compliance","Business Intelligence Developer","newBusiness Intelligence Senior Analyst","Analyste en coÃ»t de revient - Cost Accounting Analyst","Bilingual Analyst","Business Analyst (Data and BI)","Pricing Analyst - 3 + Months","Senior Developer, Business Intelligence","IT Business Analyst"],["AppleOne","Interaxon","Sun Life Financial","Shorewise Consulting LLC","Libro Credit Union","Delvinia","Manulife","Lululemon","Achev","E Inc.","Score Media and Gaming Inc.","Mobileum Inc.","Region of Waterloo","Islamic Relief Canada","Samiti Technology","Samiti Technology","Chatham-Kent","York Catholic District School Board","Nature's Emporium","J.D. Power","Shorewise Consulting LLC","Torstar","Canadian Tire Corporation","BMO Financial Group","Johnson &amp; Johnson","Alimentiv","Ipsos North America","Carfax","Payments Canada","TrackDDB","Score Media and Gaming Inc.","Peel Childrenâ€™s Aid Society","Westjet Airlines","Fintechç¤¾åŒº","Royal Bank of Canada","Hire Level Consulting","AppleOne","Humber","Alimentiv","York Region District School Board","London Health Sciences Centre","Westjet Airlines","S&amp;P Global","Royal Bank of Canada","Software International","University of Victoria","SAIT","TD Bank","TechHire","Scotiabank","Lululemon","Canadian Nuclear Laboratories","Shopify","Logibec Inc","BMO Financial Group","R.V. Anderson Associates Limited","Direct Travel","Scarsin","Aviva","Klue","Binance.US","CIRA","Diversey, Inc.","LCBO","Zekelman Industries","St. Michael's Hospital","Zensurance","Tucows","Avison Young","Trader Corporation","Citi","Purple Drive Technologies","Bell Canada","Royal Bank of Canada","University of Waterloo","Canadian Red Cross","The College of Physicians and Surgeons of Ontario","Deloitte","Westjet Airlines","Avison Young Canada","Quad Infotech","Canadian Security Intelligence Service","Ottawa Sports &amp; Entertainment Group","TELUS","TELUS","Canadian Food Inspection Agency","University of Waterloo","Bank of America","Clio","Royal Bank of Canada","Royal Bank of Canada","Score Media and Gaming Inc.","Purolator","Kent Building Supplies","BGIS","Uncommon Purpose","OSL Retail Services Inc","SOCAN - Society of Composers, Authors and Music...","City of Coquitlam","Tresume","Lone Wolf Technologies","Geotab","Royal Bank of Canada","Dapper Labs","Mohawk Medbuy Corporation","Kent Building Supplies","BGIS","Uncommon Purpose","OSL Retail Services Inc","SOCAN - Society of Composers, Authors and Music...","City of Coquitlam","Tresume","Lone Wolf Technologies","Geotab","Royal Bank of Canada","Dapper Labs","Mohawk Medbuy Corporation","Yokohama Tire Canada inc.","Ministry of Northern Development, Mines, Natural...","TELUS","N2P Systems","Michael Page CA","Unity Technologies","Nissan","AirSuite","Ministry of the Solicitor General","Carfax","Reliance Home Comfort","Google","Geotab","Okta","Lululemon","MasterCard","Public Goods","Alba Inc.","TELUS","Dapper Labs","Btrust International Trading Inc.","Total Credit Recovery","Publicis Sapient","Royal Bank of Canada","Valtech","Citi","TD Bank","County of Lambton","Sander Geophysics","CUSTOMER EXPERIENCE/EXPRIÃ‰NCE CLIENT","KPMG","ClearEstate","Canadian Tire Corporation","ClearEstate","Canadian Tire Corporation","HRC Global Services","eHealth Saskatchewan","knak","Yamaha Motor Canada","Aviva","Novitech Inc.","StackPros Inc.","OCS","KPMG","ContactPoint 360","The EstÃ©e Lauder Companies","NielsenIQ","Heart &amp; Stroke","WGames Inc.","Thumbtack","Johnson &amp; Johnson","Dapasoft Inc","Sun Life Financial","Talent Department","Jarvis Consulting Group","Hive Media Group","RideCo","Tiger Analytics Inc.","NAVBLUE, an Airbus Company","GVF Group of Companies","Canadian Red Cross","Fullscript","theScore Inc.","theScore Inc.","RPM TECHNOLOGIES CORP","The Salvation Army Canada and Bermuda","J.D. Power","Dokainish &amp; Company","Cognizant Microsoft Business Group","Sander Geophysics Limited","Quantfury","Specialisterne Canada","AJC &amp; Associates Inc.","GFD","Checkfront","Accenture","Western Financial Group","Carfax","J.D. Power","Dokainish &amp; Company","Cognizant Microsoft Business Group","Sander Geophysics Limited","Quantfury","Specialisterne Canada","AJC &amp; Associates Inc.","GFD","Checkfront","Accenture","Western Financial Group","Carfax","Statistics Canada","Noya Cannabis Inc.","Util-Assist Inc.","Southlake Regional Health Centre","Lucova","Myplanet","The Ottawa Hospital","BDO","Oracle","Government of Saskatchewan","HRC Global Services","Canada Revenue Agency","Angi","Intact","HRC Global","Sanofi US","CaseWare IDEA","Backstage","Nanometrics Inc","Lowe's Canada","Payroc","Software International","IPG Mediabrands","Eastside Games Studio","SRYAS INC.","SIRVA","Shorewise Consulting LLC","Luminex","Symcor","Sun Life Financial","Dash Hudson","Royal Bank of Canada","JNP Logiciel International Inc.","H&amp;E Equipment Services","N-able","Centre for Gender and Sexual Health Equity","Toyota Motor Manufacturing Canada","Optimal Growth Technologies","BMO Financial Group","Deer Lodge Centre","Metro Inc.","Spectrum Health Care","Score Media Ventures Inc.","Elastalink Corp","Constance Financial Inc.","Intelligent Fabric Technologies (North America)","Peavey Industries LP","Town of Oakville","BMO Financial Group","Deer Lodge Centre","Metro Inc.","Spectrum Health Care","Score Media Ventures Inc.","Elastalink Corp","Constance Financial Inc.","Intelligent Fabric Technologies (North America)","Peavey Industries LP","Town of Oakville","Labour Market Information Council","Calibery Software LLC","City of Regina","Cox Automotive","Electronic Arts","Manitoba Agricultural Services Corporation","Anheuser-Busch","Xerris","Community Living Toronto","Central 1 Credit Union","Moody's","Manulife","League Inc.","EDC","Envision Sales Inc.","ATCS Inc.","CPP Investments","Royal Bank of Canada","Uncommon Purpose","BMO Financial Group","BMO Financial Group","ISM Canada","Golf Town Operating Limited Partnership","Ubisoft","University of Waterloo","PwC","PHSA","Bombardier","Centre for Addiction and Mental Health","Norsat International Inc.","Uncommon Purpose","Royal Bank of Canada","Assent","Capgemini","Graywood Group","PwC","PHSA","Bombardier","Centre for Addiction and Mental Health","Norsat International Inc.","Uncommon Purpose","Royal Bank of Canada","Assent","Capgemini","Graywood Group","Grantek Systems Integration","Toronto School of Management","FLEETCOR","CARFAX Canada","FreshBooks","SkyHive Technologies Inc.","HomeEquity Bank","The Portage Mutual Insurance Company","BMO Financial Group","fusionSpan","Sudbury District Nurse Practitioner Clinics","Waterloo Regional Police Service","Metro Vancouver","BC Public Service","Baylis Medical Technologies","Innovapost","Thrive Health","HealthHub Solutions","Trillium Health Care Products","ArcelorMittal Dofasco","University of Victoria","NAVBLUE","Granite Springs Golf Club","Neo Financial","Westjet Airlines","Boutique La Vie En Rose","City of Windsor","Livingston International","Genpact","BMO Financial Group","Alberta Health Services","Tetra Tech","Centrecorp Management Services Limited","Deloitte","theScore Inc.","Westjet Airlines","Boutique La Vie En Rose","City of Windsor","Livingston International","BMO Financial Group","Alberta Health Services","Tetra Tech","Centrecorp Management Services Limited","Deloitte","theScore Inc.","TELUS","Tulloch Consulting","SS&amp;C Technologies","Scribendi","Mitel","MSi Corp (Bell Canada)","Ford Motor Company","BC Public Service","BMO Financial Group","Aecon Group","KAYZEN CLOUD SOLUTIONS","Buckland","Infrastructure Ontario","Rogers Communications","Calgary Foothills Primary Care Network","Shorewise Consulting LLC","Arthur Grand Technologies Inc","Kalibrate","Scotiabank","City of Hamilton","Canadian Tire Corporation","Scotiabank","Royal Bank of Canada","Extendicare Canada Inc.","JLL","Capgemini","Numeris","Hypertec Administration Inc.","JLL","Connect Tech","Oomomo Canada Ltd.","theScore Inc.","Sun Life Financial","Ameya Data Solution","University of Waterloo","Sun Life Financial","Ameya Data Solution","University of Waterloo","Fugro","Deloitte","MarshallZehr Group Inc.","ATP","Publicis Sapient","NorWest Community Health Centres","World Vision Canada","Dawn InfoTek Inc.","Dawn InfoTek Inc.","Desjardins","Capital One","Deloitte","Tikinagan Child &amp; Family Services","The Skyline Group of Companies","S4 Market Data","City of Toronto","Alstom","S&amp;P Global","Xylem","Scotiabank","SAIT","Canadian Tire Corporation","ARZ Fine Foods","PC Financial","Scotiabank","Autodesk","Chef Brandz","The Globe and Mail","Tresume","Score Media Ventures Inc.","Canadian Tire Corporation","EGATE Networks","DSV","Shorewise Inc","AlertDriving","Canada Life Assurance Company","Reckitt","Chef Brandz","BGIS","Kinectrics","Amazon Dev Centre Canada ULC","Bureau Veritas","Amazon Dev Centre Canada ULC","Bureau Veritas","Fraser Health","Game Hive Corporation","Ledcor","GWL Realty Advisors","Capgemini","Deloitte","Maverin Inc.","Sun Pharmaceutical Industries, Inc.","Genpact","Gordon Food Service Canada","ICF","Fragomen,(Canada) Co.","MarshallZehr","Pomerleau","Fundserv Inc.","George Brown College","Ubisoft","Anheuser-Busch","BMO Financial Group","Wave","Conexiom","Grant MacEwan University","CAPREIT","University Health Network","BURNCO Rock Products","Kitchen Hub","Cvent","Royal Bank of Canada","Royal Bank of Canada","Teleperformance Canada","Ornge","FortisBC","Aviva","Cognizant","Unity Technologies","University Health Network","Deloitte","BMO Financial Group","Ministry of Health","Cognizant Microsoft Business Group","Avesdo","Unilever","City of Regina","City of Regina","L3Harris Technologies","General Dynamics Missions Systems-Canada","Sportlogiq","Royal Bank of Canada","Accenture","Metro Vancouver","Citi","CGI Inc","Definity","Genpact","AMZN CAN Fulfillment Svcs, ULC","Bench Accounting","NielsenIQ","Right to Play","StackAdapt","Wipro Limited","Foxquilt","Baylis Medical Technologies","Active Exhaust Corp.","StackAdapt","City of Regina","Assembly of First Nations","Canadian Musicians Co-operative","Brookfield Properties","Aecon Group","Spin Master Ltd","Databook","Gemstone Logistics","Amazon Dev Centre Canada ULC","Emplifi","Cognizant Technology Solutions","EDealer","Scotiabank","The J. M. Smucker Company","Electrical &amp; Automation Industry Careers","BOMA Edmonton","Wavo","Anheuser-Busch","Queen's University","AutoCanada Inc.","Specialisterne Canada","ecobee","Olympus Corporation of the Americas","Mircom Group of Companies","ecobee","Olympus Corporation of the Americas","Mircom Group of Companies","aha insurance","CBI Health","Mariner Innovations","OTIP (Ontario Teachers Insurance Plan)","Electronic Arts","Mueller Water Products","Marks Supply Inc","Deloitte","Honeywell","Ignite Technical Resources.","AstraNorth","LMC Healthcare","LMC Healthcare","CirrusLabs","Valiantys Inc.","Westjet Airlines","BGRS","Q4","Bank of Canada","BMO Financial Group","EMCO Corporation","Sanofi US","BMO Financial Group","Ontario Ministry of the Solicitor General","SyLogix Consulting Inc.","J.D. Power","JELD-WEN, inc","theScore Inc.","Plan Group","MCAP","Amazon Dev Centre Canada ULC","Ministry of Northern Development, Mines, Natural...","City of Edmonton","TD Bank","Cenovus Energy","MRM","Royal Bank of Canada","Shorewise Consulting LLC","Avenu Insights &amp; Analytics","Equitable Life of Canada","Rogers Communications","TD Bank","APV","Toronto School of Management","Clarius Mobile Health","eSentire","Lululemon","CIT Corp","BC Public Service","CPP Investments","LeddarTech - Envision the road ahead!","Johnson &amp; Johnson","Providence Health Care","Delbridge Solutions Inc.","Dapper Labs","EY","The Cadillac Fairview Corporation Limited","Geotab","The City of Kingston","coty","Stewart Title Guaranty Company","Canadian Tire Corporation","Manitoba Government","Foss National Leasing Ltd.","Auvenir","Trulioo","Simon Fraser University","THE SHANDEX GROUP","OSL Retail Services Inc","Peak Power","VISAY TECHNOLOGIES INC","Government of Saskatchewan","Peak Power","VISAY TECHNOLOGIES INC","Government of Saskatchewan","Woodlands Head Office","Grewal Immigration Services Ltd.","Royal Bank of Canada","TD Bank","McDougall Energy Inc.","City of Regina","Avison Young Canada","PlanIT Search","ATS Automation Tooling Systems Inc.","Paradigm Sample Holdings Canada,ULC","EPC Industries Limited","Universite Concordia","Copperstone Connect","Royal Bank of Canada","Atrium Innovations","Labour Market Information Council / Conseil de...","CWD (Circus World Displays)","Kognitiv Corporation","Royal Bank of Canada","Husky Injection Molding","StackAdapt","NCM Associates","TD Bank","AXIS Database Marketing","OMERS","Worldgroup Careers MWT","TD Bank","Clovda Technologies","ARGO","Myplanet","TELUS","LaSalle College Vancouver","Hitachi Solutions Ltd","SYNNEX Corporation","Aversan","Triton Digital Canada Inc.","McCain Foods (Canada)","PRA Health Sciences","Vermilion Energy","Dawn InfoTek Inc.","Geotab","Compass Group","BMO Financial Group","University of Alberta","Canadian Tire Corporation","Scotiabank","CaseWare IDEA","Unisys","BMO Financial Group","Regional Municipality of Peel","Canada Guaranty","HKJ Marketing","Cubic Corporation","The North West Company","Dr. Kiarash Gharabaghi Dentistry Professional...","Rogers Communications","Niagara Casinos","Motoinsight","Canada Life Assurance Company","Government of Saskatchewan","Hasbro","Scotiabank","St. Maryâ€™s General Hospital","Canadian Tire Corporation","BMO Financial Group","Canadian Tire Financial Services","TD Bank","CPQi","Royal Bank of Canada","Virtusa","Ferris Wheel Press","ZM Financial Systems","Royal Bank of Canada","Virtusa","Ferris Wheel Press","ZM Financial Systems","Luxoft","TransLink","Critical Mass","McMaster University","Clackamas County","City of Regina","Advanced Analytics and Research Lab","iGaming Ontario","SYNNEX Corporation","DP World Vancouver","Coaldale Veterinary Clinic","BC Public Service","Federated Co-operatives Limited","MUFG Investor Services","System Micro Technology and Consulting Corp","WBM TECHNOLOGIES INC.","Destination British Columbia","Fresh Prep","Sanofi","TD Bank","State Street","BMO Financial Group","Specialisterne Canada","ArcelorMittal Dofasco","Software International","Dorigo Systems","PortfolioAid Inc.","Deloitte","Vancouver Coastal Health","WorkSafeNB","IQVIA","Green PI Inc on behalf of City of Burnaby","HarperCollins Publishers","Geotab","NewAge Products Inc","Peter LeGeyt Recruiting","Launch Potato","Mister Safety Shoes","Tenaris","Canon Canada","FMC Corporation","Home Trust Company","GM Financial","Rural Development Network","Home Trust Company","Educators Financial Group","Frima Studio","MSi Corp (Bell Canada)","Grizzly Trucks","Carizon","CAA INSURANCE","NorthwesTel","Haywood Securities","Altus Group","The Principal TAG","Bounteous","Canadian Tire Corporation","Newlink.Ca Inc","Halifax Regional Municipality","Swiss Re","GardaWorld","Duca","Myers-Holum","Johnson &amp; Johnson","BMO Financial Group","Desjardins","Intact","Victoria Cool Aid Society","Casino Niagara","Unisystech Consulting inc.","AstraNorth","Unisystech Consulting inc.","AstraNorth","Bimeda","The Canadian Institute","Waterloo Regional Police Service","Groupe Dynamite Inc.","Dynasty Power Inc.","TD Bank","TD Bank","TD Bank","AstraNorth","BC Public Service","Royal Bank of Canada","Levio","Avison Young","Methodhub Canada","Dawn InfoTek Inc.","Red Nucleus","Royal Bank of Canada","Foresters Financial Services, Inc.","CryptoKitties","VECIMA TECHNOLOGY INC","Rogers Communications","Simon Fraser University","IPG Mediabrands","Shell","Taking Root","Colliers International","West Fraser","ERCO Worldwide","Mariner Innovations","St. Joseph's Healthcare Hamilton","PopReach","Dawn InfoTek Inc.","Canon Canada","eSSENTIAL Accessibility","Bank of Canada","Reliance Home Comfort","Toyota Motor Manufacturing Canada","GM BluePlan Engineering","The Workers' Compensation Board","FCT","Air Canada","Canadian Solar","Luxoft","CAAT Pension Plan","Ministry of the Solicitor General","Invest Ottawa/Bayview Yards","BMO Financial Group","SpringGage","Alberta Health Services","FreshBooks","GreenSlate LLC","Edgetch HVAC Services Ltd.","Synoptek","Canada Deposit Insurance Corporation","United Way British Columbia","Coastal Community Credit Union","TD Bank","CAPCO","Insurance Corporation of British Columbia","Algonquin College","Software International","Resolute Technology Solutions Inc","Leger","Maple Lodge Farms","ICTC","Environics Analytics","Coast Capital Savings","Software International","Bourgault Industries","StackAdapt","TD Bank","Business Development Bank of Canada","BollorÃ© Logistics Canada","Business Development Bank of Canada","BollorÃ© Logistics Canada","Moneris Solutions","Delbridge Solutions Inc.","This is the Deal Inc.","TD Bank","Shorewise Consulting LLC","CAPREIT","City of Regina","GS1 Canada","Brookfield Renewable","Luxoft","TD Bank","Altus Group","SAIT","Regional Municipality of Peel","Alberta Motor Association","Coaldale Veterinary Clinic","IQVIA","Home and Community Care Support Services Champlain","AstraNorth","AdamSea Inc.","Lawson Health Research Institu","Apotex","Univeris Corp","Hire Hub Placement Agency","Aecon Group","Shaw Communications","ICBC","ISM Canada","AstraNorth","Thales","CBRE","AOT Technologies","University Health Network","GLOBEWIN CONSULTING INC","Ginqo Consulting Ltd","BMO Financial Group","SCOOTER CITY","ASSURANCE","Cognizant","City of Calgary","KPMG","Coconut Software","OMERS","OGGN Inc.","Healthcare of Ontario Pension Plan (HOOPP)","TD Bank","Netcracker","Adept Global","Alberta Motor Association","Fujitsu","AstraNorth","AOT Technologies","CMEC","KIDS VALLEY DAYCARE &amp; OSC","Imperial Manufacturing Group","Nude Solutions","Aviva","Dynacare","CGI Inc","Ignite Technical Resources.","Bayer","BMO Financial Group","Lululemon","Alterna Savings","JLL","TD Bank","Affinity Credit Union","City of Kingston","McGill University","BMO Financial Group","Unilever","Angi","Deloitte","Angi","Deloitte","Citco","Manitoba Institute of Trades and Technology","Morgan Stanley","opentext","Trading Central","Mobility Quotient Solutions","Carlton One Engagement","Mueller Water Products","Irving Business Services","Royal Bank of Canada","Rogers Communications","Sanofi US","Bank of America","Insurance Corporation of British Columbia","Jonas Construction Software","Altus Group","WELL Health Technologies Corp","Atlantic Packaging Products","Guidewire Software, Inc.","Open Text Corporation","Dapper Labs","Mastronardi Produce Limited","Sanofi US","Peel Regional Police","BlackBerry","owl.co","Vancouver Shipyards","Equitable Bank","owl.co","Vancouver Shipyards","Equitable Bank","Government of New Brunswick","Fusion Analytics","Camfil Power Systems","West Park Healthcare Centre","1st Call Industrial Ltd.","StereoLOGIC","ReedGroup","LifeWorks","Orion Health","Silvacom","Loblaw Companies Limited","Vigorate","University of British Columbia","Ontario Health","The Home Depot Canada","SNC-Lavalin","Staples Canada","goeasy","Lowe's Canada","Mobile Klinik Professional Smartphone Repair","Vancouver Division of Family Practice","BOCCI","Medavie Blue Cross","TD Bank","Fastfrate","AutoCanada Inc.","excelHR","BELL MEDIA INC.","TES - The Employment Solution","WestCreek Developments Ltd.","Teck Resources Limited","Teck Resources Limited","Lowe's Canada","CMP Advanced Mechanical Solutions","Mier Recruitment","Procom","The Mason Group","Teck Resources Limited","Serti Informatique"],["Mississauga, ON","remote","remote","remote","London, ON","Toronto, ON","Toronto, ON","remote","remote","Toronto, ON","remote","Toronto, ON","Waterloo, ON","remote","Toronto, ON","Toronto, ON","Chatham-Kent, ON","Ontario","Woodbridge, ON","remote","remote","Toronto, ON","Toronto, ON+1 location","Ontario","Markham, ON","London, ON","Toronto, ON","London, ON","Toronto, ON+1 location","remote","remote","Mississauga, ON","remote","Ottawa, ON+1 location","Toronto, ON","remote","Mississauga, ON","Etobicoke, ON","remote","Newmarket, ON","London, ON","remote","remote","Toronto, ON","remote","Victoria, BC","Calgary, AB","Toronto, ON","Toronto, ON","Toronto, ON","Vancouver, BC","remote","remote","remote","Toronto, ON","remote","remote","Markham, ON","Markham, ON","remote","Vancouver, BC","remote","remote","Toronto, ON","Harrow, ON","Toronto, ON","remote","remote","Mississauga, ON","Toronto, ON","Mississauga, ON","remote","Toronto, ON","Toronto, ON","Waterloo, ON","remote","Toronto, ON","Ontario","remote","Mississauga, ON","North York, ON","Ottawa, ON","Ottawa, ON","remote","Toronto, ON+1 location","Calgary, AB+1 location","Waterloo, ON","Toronto, ON","remote","Toronto, ON","Toronto, ON","remote","Pickering, ON","Saint John, NB","Toronto, ON","remote","Mississauga, ON","remote","remote","Markham, ON","remote","remote","Toronto, ON","remote","London, ON+1 location","Saint John, NB","Toronto, ON","remote","Mississauga, ON","remote","remote","Markham, ON","remote","remote","Toronto, ON","remote","London, ON+1 location","Greater Toronto Area, ON+6 locations","Thunder Bay, ON","Toronto, ON","Toronto, ON","Toronto, ON","remote","Mississauga, ON","remote","Toronto, ON","remote","Toronto, ON","Toronto, ON","remote","remote","remote","remote","remote","Toronto, ON+1 location","Toronto, ON","remote","Oakville, ON","North York, ON","Toronto, ON","Toronto, ON","remote","Mississauga, ON","Toronto, ON","Point Edward, ON","Ottawa, ON","Toronto, ON","Toronto, ON","remote","Oakville, ON+1 location","remote","Oakville, ON+1 location","Mississauga, ON","Regina, SK","Ottawa, ON","remote","Markham, ON+1 location","Woodbridge, ON","Toronto, ON","remote","Toronto, ON","Mississauga, ON","Canada+1 location","Markham, ON","remote","Toronto, ON","remote","Guelph, ON","Toronto, ON","remote","Toronto, ON","Toronto, ON","remote","Waterloo, ON","remote","remote","Cambridge, ON","remote","remote","Toronto, ON","Toronto, ON","Toronto, ON","remote","remote","Toronto, ON","remote","Ottawa, ON","Toronto, ON","Greater Toronto Area, ON","remote","Toronto, ON","remote","Toronto, ON","remote","remote","remote","Toronto, ON","remote","Ottawa, ON","Toronto, ON","Greater Toronto Area, ON","remote","Toronto, ON","remote","Toronto, ON","remote","remote","Canada","Hamilton, ON","remote","Newmarket, ON","Toronto, ON","remote","Ottawa, ON","Toronto, ON","remote","Regina, SK","Mississauga, ON","remote","remote","Toronto, ON","Mississauga, ON","Toronto, ON","Canada","remote","Ottawa, ON","remote","Oakville, ON","remote","Toronto, ON","remote","Toronto, ON","Edmonton, AB","remote","Toronto, ON","Mississauga, ON","remote","remote","Toronto, ON","remote","Headquarters, BC","remote","Head, ON","Hamilton, ON","Ontario","Toronto, ON","Winnipeg, MB","Toronto, ON","Toronto, ON","Toronto, ON","Ottawa, ON","Saskatoon, SK","Markham, ON","London, ON+1 location","Oakville, ON","Toronto, ON","Winnipeg, MB","Toronto, ON","Toronto, ON","Toronto, ON","Ottawa, ON","Saskatoon, SK","Markham, ON","London, ON+1 location","Oakville, ON","remote","Toronto, ON","Regina, SK","Milton, ON","Vancouver, BC","Manitoba","London, ON","remote","Toronto, ON","remote","Toronto, ON","Toronto, ON","remote","Ottawa, ON","Toronto, ON","Toronto, ON","Toronto, ON","Toronto, ON","remote","Toronto, ON","Toronto, ON","Regina, SK","remote","MontrÃ©al, QC","Waterloo, ON","remote","Burnaby, BC","Toronto, ON+1 location","Toronto, ON","Richmond, BC","remote","Toronto, ON","remote","Toronto, ON","Toronto, ON","remote","Burnaby, BC","Toronto, ON+1 location","Toronto, ON","Richmond, BC","remote","Toronto, ON","remote","Toronto, ON","Toronto, ON","Burlington, ON","Toronto, ON","remote","London, ON","remote","Vancouver, BC","Toronto, ON","Winnipeg, MB","Toronto, ON","remote","Greater Sudbury, ON","Cambridge, ON","Burnaby, BC","remote","remote","Ottawa, ON","remote","Mississauga, ON","Brockville, ON","remote","Victoria, BC","remote","Bayside, NS","Calgary, AB","remote","MontrÃ©al, QC","Windsor, ON","Ontario","Ontario","Toronto, ON","remote","remote","Markham, ON","Ontario","Toronto, ON","remote","MontrÃ©al, QC","Windsor, ON","Ontario","Toronto, ON","remote","remote","Markham, ON","Ontario","Toronto, ON","Canada","remote","Mississauga, ON","remote","remote","Toronto, ON+2 locations","Waterloo, ON","Vernon, BC","Toronto, ON","Toronto, ON","Mississauga, ON","St. Thomas, ON","Toronto, ON","Brampton, ON","Calgary, AB","remote","Toronto, ON","remote","Toronto, ON","Hamilton, ON","Toronto, ON","remote","Toronto, ON","Markham, ON","Toronto, ON","Toronto, ON","remote","Saint-Laurent, QC","Toronto, ON","Guelph, ON","Richmond, BC","Toronto, ON","remote","Mississauga, ON","Waterloo, ON","remote","Mississauga, ON","Waterloo, ON","Mississauga, ON","Toronto, ON","Waterloo, ON","remote","Toronto, ON","Thunder Bay, ON","remote","Toronto, ON","Toronto, ON","remote","remote","Canada","Sioux Lookout, ON","Guelph, ON","remote","Toronto, ON","Brampton, ON","remote","remote","Toronto, ON","Calgary, AB","Ontario","North York, ON","Toronto, ON","Toronto, ON","Toronto, ON","Mississauga, ON","Toronto, ON","Markham, ON","Toronto, ON","Brampton, ON","North York, ON","Milton, ON+1 location","Toronto, ON","Toronto, ON","London, ON","Mississauga, ON","Mississauga, ON","Ottawa, ON","Etobicoke, ON","Vancouver, BC","Mississauga, ON","Vancouver, BC","Mississauga, ON","Surrey, BC","Toronto, ON","Calgary, AB+2 locations","Toronto, ON","remote","Toronto, ON","remote","Brampton, ON","Ontario","Milton, ON","Ottawa, ON","remote","Waterloo, ON","remote","Toronto, ON","Toronto, ON","Quebec City, QC","Creston, BC","Toronto, ON","Toronto, ON","Kitchener, ON","remote","Toronto, ON","Toronto, ON","remote","Toronto, ON","remote","Halifax, NS","Halifax, NS","Toronto, ON","Mississauga, ON","Trail, BC","MontrÃ©al, QC","Mississauga, ON","remote","Toronto, ON","Toronto, ON","Toronto, ON","remote","remote","remote","Toronto, ON","Regina, SK","Regina, SK","Mirabel, QC","Ottawa, ON","remote","Toronto, ON+1 location","Toronto, ON+3 locations","Burnaby, BC","Mississauga, ON","remote","remote","remote","Brampton, ON+1 location","remote","Markham, ON","Toronto, ON","Canada","Toronto, ON","remote","remote","Toronto, ON","Canada","Regina, SK","Ottawa, ON","remote","remote","Toronto, ON","Toronto, ON","remote","remote","Vancouver, BC+2 locations","remote","Mississauga, ON","Toronto, ON","Toronto, ON","remote","Toronto, ON","Edmonton, AB","remote","Toronto, ON","Kingston, ON","Edmonton, AB","Toronto, ON","remote","Richmond Hill, ON","Vaughan, ON","remote","Richmond Hill, ON","Vaughan, ON","Kitchener-Waterloo, ON","Toronto, ON","Saint John, NB+6 locations","remote","Vancouver, BC","Toronto, ON","Kitchener, ON","Canada","Kanata, ON","remote","remote","remote","remote","remote","remote","remote","remote","remote","remote","Toronto, ON","remote","remote","Toronto, ON","Toronto, ON","North York, ON","remote","Woodbridge, ON","Toronto, ON","Vaughan, ON","Toronto, ON","Toronto, ON","Thunder Bay, ON","Edmonton, AB","Toronto, ON+1 location","Lloydminster, SK","Toronto, ON","Toronto, ON","remote","Mississauga, ON","Waterloo, ON","remote","Kitchener, ON","remote","Toronto, ON","remote","Waterloo, ON+1 location","Vancouver, BC","Concord, ON","Campbell River, BC+1 location","Toronto, ON","Quebec City, QC+1 location","Toronto, ON","remote","remote","remote","Toronto, ON","Toronto, ON","remote","Kingston, ON","Toronto, ON","Toronto, ON","Toronto, ON","Winnipeg, MB","Markham, ON","Toronto, ON","Vancouver, BC","Burnaby, BC","Pickering, ON","Mississauga, ON","Toronto, ON","Edmonton, AB","Regina, SK","Toronto, ON","Edmonton, AB","Regina, SK","Saint John, NB","Edmonton, AB","Halifax, NS","Toronto, ON","Sault Ste. Marie, ON+1 location","Regina, SK","Markham, ON","Toronto, ON","Cambridge, ON","Toronto, ON","Amherst, NS","MontrÃ©al, QC","Toronto, ON","Toronto, ON","Richmond Hill, ON","Ottawa, ON","Niagara Falls, ON","Toronto, ON","Toronto, ON","Bolton, ON","Canada","Moncton, NB","Toronto, ON","Mississauga, ON","Toronto, ON","Toronto, ON","Toronto, ON","Calgary, AB","Markham, ON","remote","Toronto, ON","Vancouver, BC","Toronto, ON","Toronto, ON","Vaughan, ON","Toronto, ON+1 location","Florenceville-Bristol, NB","remote","Calgary, AB","Kingston, ON+1 location","remote","Mississauga, ON","Toronto, ON","Edmonton, AB","Toronto, ON","Toronto, ON","Ontario","Halifax, NS","Toronto, ON","remote","Toronto, ON","Richmond, BC","Gagetown, NB+1 location","Winnipeg, MB","Woodbridge, ON","remote","Niagara Falls, ON","Toronto, ON","London, ON","Regina, SK","Toronto, ON","Toronto, ON","Kitchener, ON","Vaughan, ON","Toronto, ON","Oakville, ON","Toronto, ON+1 location","Toronto, ON","Toronto, ON","Halifax, NS","Markham, ON","Toronto, ON","Toronto, ON","Halifax, NS","Markham, ON","Toronto, ON","remote","Metro Vancouver Regional District, BC","remote","Hamilton, ON","remote","Regina, SK","remote","Toronto, ON","remote","Burnaby, BC","Lethbridge County, AB","Vancouver, BC","remote","remote","Oakville, ON","Vancouver, BC+1 location","Vancouver, BC","remote","remote","Toronto, ON","Toronto, ON","Toronto, ON","remote","Hamilton, ON","remote","Burnaby, BC","Toronto, ON","MontrÃ©al, QC","Surrey, BC+1 location","Saint John, NB","Ottawa, ON","remote","remote","remote","remote","Calgary, AB","remote","remote","Sault Ste. Marie, ON","remote","Calgary, AB","Toronto, ON","Toronto, ON","remote","Toronto, ON","Toronto, ON","remote","Ottawa, ON+2 locations","Edmonton, AB","Kitchener, ON","Thornhill, ON","Yellowknife, NT","Toronto, ON","remote","remote","Canada","Toronto, ON","Markham, ON","Halifax, NS","Toronto, ON","Mississauga, ON","Toronto, ON","remote","Markham, ON","Toronto, ON","remote","remote","Victoria, BC","Niagara Falls, ON","North York, ON","Toronto, ON","North York, ON","Toronto, ON","Canada","Toronto, ON","Cambridge, ON","Mont-royal, QC","Calgary, AB","Toronto, ON","remote","Toronto, ON","remote","Victoria, BC","Halifax, NS","MontrÃ©al, QC","Vancouver, BC+2 locations","Mississauga, ON","Toronto, ON","Toronto, ON","Toronto, ON","remote","Vancouver, BC","remote","Brampton, ON","Burnaby, BC","Toronto, ON","Fort Saskatchewan, AB","remote","Toronto, ON+5 locations","Quesnel, BC","Ontario","St. John's, NL+4 locations","Hamilton, ON","Vancouver, BC","Toronto, ON","remote","Toronto, ON","remote","Toronto, ON","Pickering, ON","Vaughan, ON","remote","remote","Dorval, QC","Guelph, ON","Toronto, ON","remote","Orillia, ON","Ottawa, ON","Toronto, ON","Toronto, ON","Calgary, AB","remote","remote","Mississauga, ON","Saint John, NB","Ottawa, ON","Burnaby, BC+4 locations","Nanaimo, BC","Toronto, ON+1 location","Toronto, ON","remote","remote","remote","remote","remote","Mississauga, ON","Ottawa, ON","Toronto, ON","remote","remote","St. Brieux, SK","Canada","Toronto, ON","remote","Mississauga, ON","remote","Mississauga, ON","remote","Concord, ON","Toronto, ON","Toronto, ON","remote","Toronto, ON","Regina, SK","Toronto, ON","Gatineau, QC","remote","Mississauga, ON","Halifax, NS","Calgary, AB","remote","Calgary, AB","Lethbridge County, AB","remote","Ottawa, ON","Toronto, ON","Toronto, ON","remote","North York, ON","remote","Edmonton, AB","Toronto, ON","Toronto, ON","North Vancouver, BC+1 location","Regina, SK","Toronto, ON","Burlington, ON","Victoria, BC","Victoria, BC","Toronto, ON","remote","remote","Toronto, ON","Coquitlam, BC","remote","Toronto, ON","Calgary, AB","Calgary, AB","Canada","Toronto, ON","Ottawa, ON","remote","Mississauga, ON+1 location","remote","Pickering, ON","Edmonton, AB","Toronto, ON","Toronto, ON","Victoria, BC","remote","Leduc, AB","Dieppe, NB","Calgary, AB","Markham, ON","Brampton, ON","Toronto, ON","Burnaby, BC","remote","Toronto, ON","Vancouver, BC","Toronto, ON","Toronto, ON","Toronto, ON+1 location","Saskatchewan","Kingston, ON","MontrÃ©al, QC","Toronto, ON","Kingston, ON","remote","Canada","remote","Canada","Halifax, NS","Winnipeg, MB","remote","remote","Ottawa, ON","Calgary, AB","Markham, ON","Toronto, ON","remote","Toronto, ON","Brampton, ON","Toronto, ON","Toronto, ON","remote","remote","remote","Toronto, ON","Scarborough, ON","remote","remote","remote","Kingsville, ON","Toronto, ON","Brampton, ON","Waterloo, ON","remote","North Vancouver, BC","Toronto, ON","remote","North Vancouver, BC","Toronto, ON","Fredericton, NB","Canada","Laval, QC","Toronto, ON","Mississauga, ON","Toronto, ON","remote","remote","remote","Edmonton, AB","Brampton, ON","Toronto, ON","Vancouver, BC","Toronto, ON","Toronto, ON","Toronto, ON","Richmond Hill, ON","Mississauga, ON","Boucherville, QC","Mississauga, ON","Vancouver, BC","Vancouver, BC","remote","Toronto, ON","MontrÃ©al, QC","Edmonton, AB","Barrie, ON","MontrÃ©al, QC","Brampton, ON","Calgary, AB","Vancouver, BC","Vancouver, BC","Boucherville, QC","ChÃ¢teauguay, QC","St. Laurent, ON","Calgary, AB","Toronto, ON","Vancouver, BC","Greater Montreal Area, QC"],[3.8,null,3.9,null,3.7,null,4,4.2,null,2.5,null,null,3.4,4,null,null,4.5,4.5,null,null,null,3.7,3.6,3.8,4.2,null,3.9,null,4.1,null,null,null,3.9,null,4,null,3.8,4.4,null,4.1,3.8,3.9,3.9,4,null,4.2,4,3.8,null,3.9,4.2,3.5,3.8,4.3,3.8,4.2,null,null,3.8,5,null,5,3.7,3.7,2.5,4.1,null,3,3.6,3.6,3.9,null,3.7,4,4.4,4,3.3,4,3.9,null,null,4.4,3.7,3.9,3.9,4.1,4.4,3.8,4.1,4,4,null,3.5,3.4,3.1,null,2.9,3.4,4.2,null,2.9,2.7,4,null,2.7,3.4,3.1,null,2.9,3.4,4.2,null,2.9,2.7,4,null,2.7,null,null,3.9,null,3.5,null,3.8,null,3,null,3,4.3,2.7,null,4.2,4,null,null,3.9,null,null,3,3.9,4,4,3.9,3.8,3.5,3.8,null,3.9,null,3.6,null,3.6,null,3.6,null,4.3,3.8,null,3,4,3.9,4.1,4,null,4.2,null,null,4.2,null,3.9,null,null,null,4,null,3.9,2.5,4,3.2,3.3,3.3,3.5,null,null,null,null,3.8,null,null,null,null,4.7,4,3.7,null,null,null,null,3.8,null,null,null,null,4.7,4,3.7,null,4.1,null,2.5,3.9,null,4.5,4.1,3.6,3.8,3.8,null,4,null,3.8,null,4.1,null,null,3.5,3.5,null,null,3.7,null,null,null,null,3.5,3.9,3.9,null,4,null,null,null,null,3,null,3.8,4,3.5,3.5,null,null,null,null,3.3,4.1,3.8,4,3.5,3.5,null,null,null,null,3.3,4.1,null,null,null,3.4,3.8,null,3.7,null,null,2.8,3.6,4,null,3.8,null,null,null,4,null,3.8,3.8,3.1,null,3.8,4.4,3.7,3.1,3.8,4,null,null,4,null,3.8,null,3.7,3.1,3.8,4,null,null,4,null,3.8,null,4.8,4,3.1,null,4,4.8,2.3,4,3.8,null,null,2.8,3.8,3.4,null,3.6,2,null,3,4,4.2,3.9,null,4.3,3.9,3.2,3.8,3.1,null,3.8,3.8,3.8,3.7,4,3.3,3.9,3.2,3.8,3.1,3.8,3.8,3.8,3.7,4,3.3,3.9,null,3.2,null,3.3,3.6,4.1,3.4,3.8,4,null,3.5,3,3.7,null,null,null,null,3.9,4.2,3.6,3.9,4,3.3,3.7,3.8,3.4,null,3.7,3,null,3.3,3.9,null,4.4,3.9,null,4.4,3.9,4,null,null,3.9,null,3.9,null,null,3.9,3.9,4,3.3,2.8,null,4.2,4,3.9,3.4,3.9,4,3.6,3.8,3.2,3.9,4.1,3.3,3.8,null,null,3.6,null,3.4,null,null,3.7,3.8,3.3,3.1,null,3.5,3.7,3.5,3.7,3.7,null,3.7,3.7,3.8,4,null,3.8,null,3.5,3.4,3.2,null,3.8,null,4.3,3.8,3.7,3.8,3.3,2,4.2,3.2,4.1,3,null,3.6,4,4,3.5,3.8,3.4,3.8,3.9,null,4.1,4,3.8,3.9,null,4.3,4.2,null,null,3.7,3.8,2.4,4,4,3.8,3.9,3.6,null,null,3.5,4.3,null,4.1,4.5,3.8,null,null,2.9,4.5,null,2.8,4.3,3.7,4,3.4,null,null,3.5,null,3.9,2.5,3.9,3.6,null,null,null,3.7,4.3,3.2,null,2.9,3.6,3.1,2.9,3.6,3.1,null,2.8,4,3.2,3.8,2.9,2.8,4,3.7,null,null,2.9,2.9,null,null,3.9,3.4,3.5,4,3.8,3.3,4.1,3.8,3,null,null,3.1,3.3,3.6,3.5,3.5,null,3.7,3.8,3.7,null,4,null,null,3.8,3.7,3.8,null,4,4.8,3.9,4.2,3.8,3.4,null,4,4.2,null,4,null,4,3.7,2.7,3.1,null,3.3,3.6,3.7,null,3.7,4,4.2,3.6,2.9,null,null,3.8,null,null,3.8,2.7,null,4,3.8,2.7,null,null,2,3.1,null,null,4.1,null,4,3.3,null,3.3,null,4,3.7,4.5,null,3.8,null,3.4,4,3.8,null,null,4.5,3.9,4.3,3.8,3.5,3.2,null,3.6,3.5,3.5,null,2.7,3.2,3.8,4.3,3.6,3.9,null,3.6,3.8,4.2,null,null,3.7,3.9,null,3.7,3.8,4.5,3.7,3.8,4.1,3.9,4.3,3.6,3.8,3.6,3.8,null,4,3.7,null,null,4,3.7,null,null,null,3.7,3.6,4.3,null,null,null,null,3.5,4,null,3.4,3.4,3.4,null,3.3,null,3.5,4.1,3.8,3.5,3.8,null,4,null,2.7,3,4,3.7,3.7,3.8,null,3.9,2.7,4.1,null,null,3.1,3.9,3.5,4,3.6,3.6,null,3.6,2.8,4,3.6,null,null,4.4,3.8,2.7,2.7,null,null,3.6,null,4.2,4,2.7,null,null,4.2,3.8,3.9,3.8,3.1,4,null,null,null,null,3,2.6,2.8,3.3,null,3.8,3.8,3.8,null,3.4,4,4.1,3.6,null,null,null,4,3.4,null,null,3.7,4.2,3.7,3.9,null,3.8,3.3,3.5,4,3.6,null,null,3.5,null,4,3,3,3.3,null,3.1,3.8,3.5,null,4,3,null,3.8,null,3.8,4,null,null,3,null,null,4.3,3.8,3.4,3.4,4.3,null,4.2,2.9,3,null,2.3,3.7,null,3.8,4.5,3.8,3.8,3.5,3.8,3.5,3.4,4,null,3.8,null,3.2,null,2.8,3.9,null,3.8,2.7,4,4.2,3.5,null,3.8,3.8,null,null,null,3.9,null,null,4,3.8,3.4,3.1,null,3.9,3.7,null,4.1,null,null,3.8,3.5,null,3.9,4,3.9,null,3.4,null,3.8,3.8,3.4,null,3.5,3.6,null,null,null,null,3.1,null,3.8,3.5,3.6,null,4.1,3.8,4.2,3.1,3.7,3.8,3.6,3.1,4.3,3.8,4.2,null,4,null,4,3.2,3.1,3.8,3.5,3,null,null,2.9,2.7,4,3.7,4.1,3.8,3.4,3.2,2.7,null,3.3,3.7,3.5,null,2.8,4.1,4.4,4,null,3.4,4.1,null,3.4,4.1,4.6,null,null,3.6,null,null,null,3,3.2,null,3.5,null,4.1,4.3,3.7,4,3.6,3.3,3.5,3.2,null,null,3.4,3.8,2.9,3.2,3.8,3.6,3.6,null,3.9,3.9,3.5,3.2,null,3.6,4.2,3.9,4.1],["ON","remote","remote","remote","ON","ON","ON","remote","remote","ON","remote","ON","ON","remote","ON","ON","ON","IO","ON","remote","remote","ON","ON","IO","ON","ON","ON","ON","ON","remote","remote","ON","remote","ON","ON","remote","ON","ON","remote","ON","ON","remote","remote","ON","remote","BC","AB","ON","ON","ON","BC","remote","remote","remote","ON","remote","remote","ON","ON","remote","BC","remote","remote","ON","ON","ON","remote","remote","ON","ON","ON","remote","ON","ON","ON","remote","ON","IO","remote","ON","ON","ON","ON","remote","ON","ON","ON","ON","remote","ON","ON","remote","ON","NB","ON","remote","ON","remote","remote","ON","remote","remote","ON","remote","ON","NB","ON","remote","ON","remote","remote","ON","remote","remote","ON","remote","ON","NS","ON","ON","ON","ON","remote","ON","remote","ON","remote","ON","ON","remote","remote","remote","remote","remote","ON","ON","remote","ON","ON","ON","ON","remote","ON","ON","ON","ON","ON","ON","remote","ON","remote","ON","ON","SK","ON","remote","ON","ON","ON","remote","ON","ON","ON","ON","remote","ON","remote","ON","ON","remote","ON","ON","remote","ON","remote","remote","ON","remote","remote","ON","ON","ON","remote","remote","ON","remote","ON","ON","ON","remote","ON","remote","ON","remote","remote","remote","ON","remote","ON","ON","ON","remote","ON","remote","ON","remote","remote","DA","ON","remote","ON","ON","remote","ON","ON","remote","SK","ON","remote","remote","ON","ON","ON","DA","remote","ON","remote","ON","remote","ON","remote","ON","AB","remote","ON","ON","remote","remote","ON","remote","BC","remote","ON","ON","IO","ON","MB","ON","ON","ON","ON","SK","ON","ON","ON","ON","MB","ON","ON","ON","ON","SK","ON","ON","ON","remote","ON","SK","ON","BC","BA","ON","remote","ON","remote","ON","ON","remote","ON","ON","ON","ON","ON","remote","ON","ON","SK","remote","QC","ON","remote","BC","ON","ON","BC","remote","ON","remote","ON","ON","remote","BC","ON","ON","BC","remote","ON","remote","ON","ON","ON","ON","remote","ON","remote","BC","ON","MB","ON","remote","ON","ON","BC","remote","remote","ON","remote","ON","ON","remote","BC","remote","NS","AB","remote","QC","ON","IO","IO","ON","remote","remote","ON","IO","ON","remote","QC","ON","IO","ON","remote","remote","ON","IO","ON","DA","remote","ON","remote","remote","NS","ON","BC","ON","ON","ON","ON","ON","ON","AB","remote","ON","remote","ON","ON","ON","remote","ON","ON","ON","ON","remote","QC","ON","ON","BC","ON","remote","ON","ON","remote","ON","ON","ON","ON","ON","remote","ON","ON","remote","ON","ON","remote","remote","DA","ON","ON","remote","ON","ON","remote","remote","ON","AB","IO","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","BC","ON","BC","ON","BC","ON","NS","ON","remote","ON","remote","ON","IO","ON","ON","remote","ON","remote","ON","ON","QC","BC","ON","ON","ON","remote","ON","ON","remote","ON","remote","NS","NS","ON","ON","BC","QC","ON","remote","ON","ON","ON","remote","remote","remote","ON","SK","SK","QC","ON","remote","ON","NS","BC","ON","remote","remote","remote","ON","remote","ON","ON","DA","ON","remote","remote","ON","DA","SK","ON","remote","remote","ON","ON","remote","remote","NS","remote","ON","ON","ON","remote","ON","AB","remote","ON","ON","AB","ON","remote","ON","ON","remote","ON","ON","ON","ON","NS","remote","BC","ON","ON","DA","ON","remote","remote","remote","remote","remote","remote","remote","remote","remote","remote","ON","remote","remote","ON","ON","ON","remote","ON","ON","ON","ON","ON","ON","AB","ON","SK","ON","ON","remote","ON","ON","remote","ON","remote","ON","remote","ON","BC","ON","ON","ON","ON","ON","remote","remote","remote","ON","ON","remote","ON","ON","ON","ON","MB","ON","ON","BC","BC","ON","ON","ON","AB","SK","ON","AB","SK","NB","AB","NS","ON","ON","SK","ON","ON","ON","ON","NS","QC","ON","ON","ON","ON","ON","ON","ON","ON","DA","NB","ON","ON","ON","ON","ON","AB","ON","remote","ON","BC","ON","ON","ON","ON","NB","remote","AB","ON","remote","ON","ON","AB","ON","ON","IO","NS","ON","remote","ON","BC","ON","MB","ON","remote","ON","ON","ON","SK","ON","ON","ON","ON","ON","ON","ON","ON","ON","NS","ON","ON","ON","NS","ON","ON","remote","BC","remote","ON","remote","SK","remote","ON","remote","BC","AB","BC","remote","remote","ON","ON","BC","remote","remote","ON","ON","ON","remote","ON","remote","BC","ON","QC","ON","NB","ON","remote","remote","remote","remote","AB","remote","remote","ON","remote","AB","ON","ON","remote","ON","ON","remote","NS","AB","ON","ON","NT","ON","remote","remote","DA","ON","ON","NS","ON","ON","ON","remote","ON","ON","remote","remote","BC","ON","ON","ON","ON","ON","DA","ON","ON","QC","AB","ON","remote","ON","remote","BC","NS","QC","NS","ON","ON","ON","ON","remote","BC","remote","ON","BC","ON","AB","remote","NS","BC","IO","NS","ON","BC","ON","remote","ON","remote","ON","ON","ON","remote","remote","QC","ON","ON","remote","ON","ON","ON","ON","AB","remote","remote","ON","NB","ON","NS","BC","ON","ON","remote","remote","remote","remote","remote","ON","ON","ON","remote","remote","SK","DA","ON","remote","ON","remote","ON","remote","ON","ON","ON","remote","ON","SK","ON","QC","remote","ON","NS","AB","remote","AB","AB","remote","ON","ON","ON","remote","ON","remote","AB","ON","ON","ON","SK","ON","ON","BC","BC","ON","remote","remote","ON","BC","remote","ON","AB","AB","DA","ON","ON","remote","ON","remote","ON","AB","ON","ON","BC","remote","AB","NB","AB","ON","ON","ON","BC","remote","ON","BC","ON","ON","ON","AN","ON","QC","ON","ON","remote","DA","remote","DA","NS","MB","remote","remote","ON","AB","ON","ON","remote","ON","ON","ON","ON","remote","remote","remote","ON","ON","remote","remote","remote","ON","ON","ON","ON","remote","BC","ON","remote","BC","ON","NB","DA","QC","ON","ON","ON","remote","remote","remote","AB","ON","ON","BC","ON","ON","ON","ON","ON","QC","ON","BC","BC","remote","ON","QC","AB","ON","QC","ON","AB","BC","BC","QC","QC","ON","AB","ON","BC","QC"],[45800,95000,null,86950,null,45000,null,null,47500,null,null,101750,null,null,166500,166500,null,79256.5,80000,31450,86950,null,null,null,null,null,null,null,83000,null,null,114700,null,7500,null,166500,45800,109150,null,83423.5,66600,null,60600,null,92500,71610.5,59500,null,62900,null,null,null,null,null,null,82500,null,null,null,null,null,null,null,null,null,65675,null,null,null,null,null,78625,null,null,null,null,null,null,null,null,null,93150,null,null,null,71698,null,null,null,null,null,null,null,null,null,null,null,null,45325,null,null,null,null,null,null,null,null,null,null,null,45325,null,null,null,null,null,null,null,1147.5,null,87875,null,null,null,75000,84730.5,null,null,null,null,null,null,null,null,null,null,null,33300,50000,null,null,null,null,null,null,null,null,null,null,null,null,null,129500,94350,null,null,null,45000,null,null,null,null,null,null,null,null,null,null,null,null,60000,null,null,100000,160000,null,null,null,null,null,null,null,null,null,null,null,null,115000,null,74000,null,null,null,null,null,null,null,null,null,115000,null,74000,null,null,null,null,null,73973,null,null,null,null,null,99481.5,null,null,37000,90000,81138.5,null,null,166500,null,null,null,null,null,null,120250,null,null,90000,70000,86950,null,null,null,null,null,32240,null,null,57092,null,null,null,57350,null,null,null,83250,45325,null,null,24975,null,57350,null,null,null,83250,45325,null,null,24975,72000,80049.5,98975,null,null,76097,null,157250,76410.5,null,null,null,null,80100,null,null,null,null,null,null,null,2657,null,null,null,null,79550,null,25900,null,null,null,null,null,null,null,79550,null,25900,null,null,null,null,null,null,null,null,null,null,null,null,null,40000,null,null,81400,37925,5995.5,null,null,null,null,null,60000,null,71610.5,null,66600,null,null,null,50875,null,null,null,null,null,null,null,null,null,null,50875,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,93425,null,null,null,null,86950,125800,140000,null,81400,null,null,null,null,null,null,null,75000,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,101750,71225,null,null,null,null,null,null,96760.5,null,60600,null,null,75411,null,null,null,null,null,57500,null,null,null,null,55000,null,null,null,null,null,67500,null,70000,null,null,null,null,null,null,null,null,null,null,75000,null,null,null,null,null,null,null,null,68450,null,null,null,null,null,82892,null,80096.5,null,null,null,null,null,51000,null,123025,null,null,null,null,null,null,1584.5,null,29600,null,55500,55500,null,null,85000,null,null,5768.5,null,null,null,null,null,99540,null,70000,null,null,null,null,null,null,92500,null,null,null,null,null,null,57500,null,null,null,null,null,null,null,36000,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,110000,null,null,92500,53650,null,null,null,null,null,null,null,null,null,152625,null,null,null,null,null,null,1419,100825,null,null,null,null,86950,null,null,null,null,null,null,null,null,null,74000,null,null,null,null,null,62800,null,null,null,null,36075,null,null,null,73676,null,null,null,76688,42500,null,null,43475,86950,null,43475,86950,null,1443,null,null,null,98975,null,91500,null,68450,null,75771.5,null,null,null,72000,null,null,null,null,null,null,null,null,null,null,null,111000,null,null,null,45000,null,null,null,null,null,null,null,166500,null,null,null,73875,null,null,null,null,null,94876,null,null,null,null,66600,null,null,null,null,74000,null,null,96200,null,null,null,null,null,null,null,49500,null,null,null,49500,null,null,7044,null,null,82480,96200,5000,70680,null,null,null,71221,null,null,72150,null,71221,null,null,null,null,null,null,null,null,null,60000,null,62900,77423,null,null,null,null,null,80000,null,null,null,null,null,null,null,59300,null,null,null,null,92500,109150,null,null,null,null,75390.5,null,null,83250,37925,null,null,null,null,null,null,null,null,49950,null,85000,null,85000,null,24050,50000,null,null,null,null,null,null,60000,null,null,null,null,null,138750,null,null,null,null,null,null,82594.5,null,null,null,null,null,65000,null,null,null,143375,null,null,null,null,null,null,73500,null,null,null,null,null,1866,null,null,null,null,null,null,77700,null,null,72150,null,null,null,84638.5,105450,null,null,null,null,null,null,null,115,null,null,null,null,null,null,null,null,null,93425,null,86950,null,92500,null,null,null,null,null,80000,null,null,null,null,115625,100000,66600,null,null,null,51800,null,null,null,2555,100000,null,null,null,50912,83250,85000,null,81400,null,null,48100,null,null,null,null,null,null,null,93425,null,null,120000,null,72664.5,100825,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,81520.5,null,null,null,null,null,null,null,null,null,null,null,84638.5,null,null,null,null,null,null,null,null,null,49025,null,null,null,null,null,null,null,63492,null,null,null,106375,72500,null,null,null,null,null,77500,111904,null,null,null,null,null,null,50000,null,null,null,null,null,null,95000,null,null,null,null,null,null,null,60000,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>title<\/th>\n      <th>company<\/th>\n      <th>location<\/th>\n      <th>rating<\/th>\n      <th>province<\/th>\n      <th>pay<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[4,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+
+</section>
+</section>
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+</body></html>
