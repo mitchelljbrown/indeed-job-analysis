@@ -76,7 +76,7 @@
     <a class="nav-link" href="./cleaning.html">Cleaning</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./visualizing.html">Visualizing</a>
+    <a class="nav-link" href="./visualizing.html">Insights</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -94,13 +94,29 @@
 <header id="title-block-header" class="quarto-title-block default">
 
 <div class="quarto-title"><h1 class="title display-7">About This Project</h1></div></header>
-<p><img src="indeed-site.PNG" class="img-fluid"></p>
+<p><img src="images/indeed-site.PNG" class="img-fluid"></p>
 <section id="motivation" class="level2">
 <h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
-<p>As an aspiring data analyst, I am interested in the job prospects of this career in Canada and gain insight on the location of most of the jobs, their pay, and the rating employees give to their companies. Indeed.ca is a great place to find this information. I decided to scrape data form indeed.ca with python, and then clean the data and analyze it in R. This website presents my scraping, cleaning, and visualization methods in a clear and concise way. I hope you enjoy learning about my process and find the analysis interesting</p>
+<p>Throughout my MSc in Water Resources Engineering I became enthralled by the field of data analytics and data science. My thesis project involved a heavy data analytics component where I have spent countless hours in R analyzing hydrogeologic data. After realizing the endless capabilities of programming languages like R and Python, I quickly became interested in a career in data analytics. Most geoscience disciplines have a large analytical component involving large and complex datasets. As someone who has had ample experience collecting, analyzing and interpreting data, I believe I possess many of the skills necessary to apply for jobs in the data analytics field.</p>
+<p>One of the things I have contemplated is how do the job opportunities for geoscientists differ from data analysts? To answer this question, I developed a strategy and created this website to showcase it.</p>
+<section id="scraping" class="level3">
+<h3 class="anchored" data-anchor-id="scraping">Scraping</h3>
+<p>I wrote a generic scraping function in python to scrape every record from a search in indeed.com given a specific search criteria. I scraped data for data analyst positions and geoscience positions and stored them in the same .csv file. Here is what the data looked like after scraping:</p>
+<p><img src="images/scrpaed-data.PNG" class="img-fluid"></p>
+</section>
+<section id="cleaning" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning">Cleaning</h3>
+<p>After the data was collected. It needed to be cleaned to be used to gain the desired insights. To do this, I heavily relied on the data.table package in R. The most challanging aspect of cleaning was parsing the pay column strings to collect salary information. Here is what the data looked like after cleaning:</p>
+<p><img src="images/cleaned-data.PNG" class="img-fluid"></p>
+</section>
+<section id="gaining-insight" class="level3">
+<h3 class="anchored" data-anchor-id="gaining-insight">Gaining Insight</h3>
+<p>Now that the data is ready to be used for analysis. I made thorough comparisons regarding job availability, remote work, salary expectations and location distribution. I also created tables showcasing the best companies to work for in each industry based on salary expectations and company reviews.</p>
+<p><img src="images/rating-dist.PNG" class="img-fluid"> <img src="images/pay-dist.PNG" class="img-fluid"> <img src="images/best-comp.PNG" class="img-fluid"></p>
 
 
 
+</section>
 </section>
 </main> <!-- /main -->
 <script type="application/javascript">

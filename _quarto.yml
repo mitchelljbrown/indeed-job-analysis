@@ -19,7 +19,7 @@ website:
       - href: cleaning.qmd
         text: Cleaning
       - href: visualizing.qmd
-        text: Visualizing
+        text: Insights
 
 format:
   html:

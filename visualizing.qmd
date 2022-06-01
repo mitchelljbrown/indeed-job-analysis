@@ -1,8 +1,8 @@
 ---
-title: "Visualizing Cleaned Data"
+title: "Data Insights"
 ---
 
-![](visual-image.jpg)
+![](images/visual-image.jpg)
 
 ```{r}
 #| include: false
